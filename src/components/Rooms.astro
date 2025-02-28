@@ -1,0 +1,54 @@
+---
+const habitaciones = [
+    {
+        nombre: "Habitación simple",
+        descripcion: "Una habitación espaciosa con vista panorámica.",
+        precio: "S/ 70 - noche",
+        imagen: "/home_bg.png"
+    },
+    {
+        nombre: "Habitación Matrimonial",
+        descripcion: "Elegancia y comodidad con servicios exclusivos.",
+        precio: "S/ 100 - noche",
+        imagen: "/home_bg.png"
+    },
+    {
+        nombre: "Habitación Súper King",
+        descripcion: "Ideal para compartir en un ambiente acogedor.",
+        precio: "S/ 120 - noche",
+        imagen: "/home_bg.png"
+    }
+];
+---
+<section class="py-16 bg-gray-100">
+    <div class="max-w-6xl mx-auto text-center mt-12 px-4">
+        <h2 class="text-4xl font-semibold text-gray-800">
+            NUESTRAS 
+            <span class="text-[#c39b72]">HABITACIONES</span>
+        </h2>
+        <p class="text-gray-600 mt-2">
+            En HOTEL SAGITARIO, hacemos que tu estadía se convierta en la mejor experiencia.
+        </p>
+    </div>
+
+    <div class="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto mt-10 px-4">
+        {habitaciones.map((habitacion) => (
+            <div class="relative overflow-hidden rounded-xl shadow-lg bg-white">
+                <img 
+                    src={habitacion.imagen} 
+                    alt={habitacion.nombre} 
+                    class="w-full h-64 object-cover transition-transform duration-300 lg:group-hover:scale-105"
+                />
+                <div class="p-6 text-center">
+                    <h3 class="text-2xl font-semibold text-gray-800">{habitacion.nombre}</h3>
+                    <p class="text-gray-600 mt-2">{habitacion.descripcion}</p>
+                    <p class="text-[#c39b72] font-semibold mt-2">{habitacion.precio}</p>
+                    <a href="#" class="mt-4 inline-block px-5 py-2 bg-[#c39b72] text-white font-semibold rounded-lg hover:bg-[#a67a50] transition">
+                        Reservar ahora
+                        <i class="fa-brands fa-whatsapp ml-2"></i>
+                    </a>
+                </div>
+            </div>
+        ))}
+    </div>
+</section>

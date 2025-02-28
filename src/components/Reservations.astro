@@ -1,0 +1,115 @@
+<section class="max-w-5xl w-full bg-white py-12 p-8 mx-auto mt-5 mb-12">
+    <h2 class="text-2xl font-bold text-gray-900 mb-2 text-center md:text-left">
+        Haz tu reserva rápida y segura.
+    </h2>
+    <p class="text-gray-600 mb-6 text-center md:text-left">
+        Selecciona tu habitación, indica tus fechas, completa tus datos y nuestro equipo de atención al cliente estará siempre disponible para ayudarte. ¡Reserva ahora y vive una experiencia increíble!
+    </p>
+
+    <form class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+            <label for="nombres" class="block text-gray-700 font-semibold mb-1">
+                Nombres y Apellidos
+            </label>
+            <input type="text" id="nombres" name="nombres" placeholder="Ingresa tus datos..." class="w-full px-4 py-2 focus:outline focus:outline-[#deaa86] rounded-md bg-gray-50">
+        </div>
+
+        <div>
+            <label for="programaSelect" class="block text-gray-700 font-semibold mb-1">
+                Tipo de Habitación
+            </label>
+            <select id="programaSelect" name="programaSelect" class="w-full px-4 py-2 focus:outline focus:outline-[#deaa86] rounded-md bg-gray-50">
+                <option value="">
+                    Selecciona una habitación
+                </option>
+            </select>
+        </div>
+
+        <div>
+            <label for="fechaIngreso" class="block text-gray-700 font-semibold mb-1">
+                Fecha de Ingreso
+            </label>
+            <input type="date" id="fechaIngreso" name="fechaIngreso" class="w-full px-4 py-2 focus:outline focus:outline-[#deaa86] rounded-md bg-gray-50">
+        </div>
+
+        <div>
+            <label for="fechaSalida" class="block text-gray-700 font-semibold mb-1">
+                Fecha de Salida
+            </label>
+            <input type="date" id="fechaSalida" name="fechaSalida" class="w-full px-4 py-2 focus:outline focus:outline-[#deaa86] rounded-md bg-gray-50">
+        </div>
+
+        <div class="md:col-span-2 mt-4">
+            <button type="submit" id="consultarBtn" class="w-full bg-gray-700 hover:bg-gray-900 text-white py-3 rounded-md font-semibold flex items-center justify-center cursor-pointer" aria-label="Consultar paquete">
+                Consultar Ahora
+                <i class="fa-brands fa-whatsapp ml-1"></i>
+            </button>
+        </div>
+    </form>
+</section>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const habitaciones = [
+            { id: "1", nombre: "Simple" },
+            { id: "2", nombre: "Matrimonial" },
+            { id: "3", nombre: "Súper King" }
+        ];
+
+        const habitacionSelect = document.getElementById("programaSelect") as HTMLSelectElement | null;
+        const nombreInput = document.getElementById("nombres") as HTMLInputElement | null;
+        const fechaIngreso = document.getElementById("fechaIngreso") as HTMLInputElement | null;
+        const fechaSalida = document.getElementById("fechaSalida") as HTMLInputElement | null;
+        const consultarBtn = document.getElementById("consultarBtn") as HTMLInputElement | null;
+
+        if (!habitacionSelect || !nombreInput || !fechaIngreso || !fechaSalida || !consultarBtn) {
+            console.error("Error: No se encontraron los elementos del formulario.");
+            return;
+        }
+
+        habitaciones.forEach(habitacion => {
+            const option = document.createElement("option");
+            option.value = habitacion.id;
+            option.textContent = habitacion.nombre;
+            habitacionSelect.appendChild(option);
+        });
+
+        function formatoFecha(fechaStr: string) {
+            if (!fechaStr) return "";
+
+            const meses = [
+                "enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"
+            ];
+
+            const nuevaFecha = new Date(fechaStr);
+            if (isNaN(nuevaFecha.getTime())) return "";
+
+            const dia = nuevaFecha.getDate();
+            const mes = meses[nuevaFecha.getMonth()];
+            const año = nuevaFecha.getFullYear();
+
+            return `${dia} de ${mes} de ${año}`;
+        }
+
+        consultarBtn.addEventListener("click", function (event) {
+            event.preventDefault();
+
+            const nombre = nombreInput.value.trim();
+            const habitacion = habitacionSelect.options[habitacionSelect.selectedIndex]?.text || "" ;
+            const ingreso = formatoFecha(fechaIngreso.value);
+            const salida = formatoFecha(fechaSalida.value);
+
+            if (!nombre || !habitacionSelect.value || !ingreso || !salida) {
+                alert("Por favor, completa todos los campos antes de continuar.");
+                return;
+            }
+
+            const mensaje = `Hola, *Hotel Sagitario* me llamo ${nombre} y estoy interesado en la *Habitación: ${habitacion}* del ${ingreso} al ${salida}`;
+
+            const numeroWhatsApp = "51971111998";
+            const url = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensaje)}`;
+
+            window.open(url, "_blank");
+        });
+    });
+</script>
