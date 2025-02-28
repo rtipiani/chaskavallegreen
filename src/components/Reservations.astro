@@ -53,7 +53,9 @@
         const habitaciones = [
             { id: "1", nombre: "Simple" },
             { id: "2", nombre: "Matrimonial" },
-            { id: "3", nombre: "Súper King" }
+            { id: "3", nombre: "Súper King" },
+            { id: "4", nombre: "Familiar" },
+            { id: "5", nombre: "Cama Queen" }
         ];
 
         const habitacionSelect = document.getElementById("programaSelect") as HTMLSelectElement | null;
@@ -106,7 +108,7 @@
 
             const mensaje = `Hola, *Hotel Sagitario* me llamo ${nombre} y estoy interesado en la *Habitación: ${habitacion}* del ${ingreso} al ${salida}`;
 
-            const numeroWhatsApp = "51971111998";
+            const numeroWhatsApp = "51999102476";
             const url = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensaje)}`;
 
             window.open(url, "_blank");
