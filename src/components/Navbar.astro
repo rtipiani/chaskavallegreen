@@ -67,7 +67,14 @@
 </header>
 
 <script>
-    document.getElementById('menu-button')?.addEventListener('click', function () {
-        document.getElementById('mobile-menu')?.classList.toggle('hidden');
+    document.addEventListener("DOMContentLoaded", function () {
+        const currentPath = window.location.pathname; // Obtiene la URL actual
+        const links = document.querySelectorAll("nav a");
+
+        links.forEach(link => {
+            if (link.getAttribute("href") === currentPath) {
+                link.classList.add("text-[#deaa86]", "font-bold"); // Resalta el enlace activo
+            }
+        });
     });
 </script>

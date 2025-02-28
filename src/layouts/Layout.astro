@@ -1,4 +1,6 @@
 ---
+const { url } = Astro;
+const isContactPage = url.pathname.includes("contacts");
 import "../styles/global.css";
 ---
 <!doctype html>
@@ -7,10 +9,11 @@ import "../styles/global.css";
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width" />
 		<title>Hotel Sagitario</title>
+		{isContactPage && <script src="https://www.google.com/recaptcha/api.js" async defer></script>}
 	</head>
 	<body>
 		<slot />
-		<a href="https://wa.link/no5uic" target="_blank" rel="noopener noreferrer" class="fixed bottom-6 right-6 z-30 w-16 h-16 bg-green-500 text-white rounded-full flex items-center justify-center shadow-xl hover:bg-green-600 transition duration-300 transform hover:scale-110" aria-label="Ir a Whatsapp">
+		<a href="https://wa.link/1yi95t" target="_blank" rel="noopener noreferrer" class="fixed bottom-6 right-6 z-30 w-16 h-16 bg-green-500 text-white rounded-full flex items-center justify-center shadow-xl hover:bg-green-600 transition duration-300 transform hover:scale-110" aria-label="Ir a Whatsapp">
 			<i class="fa-brands fa-whatsapp text-2xl"></i>
 		</a>
 	</body>
