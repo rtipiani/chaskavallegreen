@@ -1,4 +1,11 @@
 ---
+const meta = {
+	title: "Hotel Gran Sagitario - Hospedaje en Moquegua con Confort y Calidad",
+	keywords: "Hotel Gran Sagitario Moquegua, hoteles en Moquegua, hospedaje en Moquegua, alojamiento en Moquegua, hotel céntrico en Moquegua, habitaciones en Moquegua, reservar hotel en Moquegua, mejor hotel en Moquegua",
+	description: "Disfruta de una estancia cómoda en el Hotel Gran Sagitario Moquegua. Habitaciones acogedoras, excelente ubicación y servicio de calidad. ¡Reserva ahora!",
+	url: "https://hotelgransagitariomoquegua.com/",
+	image: "https://hotelgransagitariomoquegua.com/imagen_seo.avif"
+};
 const { url } = Astro;
 const isContactPage = url.pathname.includes("contacts");
 import "../styles/global.css";
@@ -7,8 +14,44 @@ import "../styles/global.css";
 <html lang="es">
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-		<title>Hotel Sagitario</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="robots" content="index, follow" />
+		<meta name="author" content="Rubén Tipiani" />
+		<meta name="copyright" content="Copyright (c) 2025, Hotel Gran Sagitario Moquegua" />
+		<title>
+			{ meta.title }
+		</title>
+		<meta name="description" content={meta.description} />
+		<meta name="keywords" content={meta.keywords} />
+		
+		<!-- Open Graph / Facebook -->
+		<meta property="og:site_name" content="Hotel Gran Sagitario Moquegua" />
+		<meta property="og:title" content={meta.title} />
+		<meta property="og:description" content={meta.description} />
+		<meta property="og:image" content={meta.image} />
+		<meta property="og:url" content={meta.url} />
+		<meta property="og:type" content="website" />
+		<meta property="og:image:width" content="1200" />
+		<meta property="og:image:height" content="630" />
+		<meta property="og:image:type" content="image/avif" />
+
+		<!-- Twitter Card -->
+		<meta property="twitter:card" content="summary_large_image" />
+		<meta property="twitter:title" content={meta.title} />
+		<meta property="twitter:description" content={meta.description} />
+		<meta property="twitter:image" content={meta.image} />
+		<meta property="twitter:site" content="@hotelgransagitariomoquegua" />
+
+		<!-- Canonical URL -->
+		<link rel="canonical" href={meta.url} />
+
+		<!-- Favicon -->
+		<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+		<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+		<link rel="manifest" href="/site.webmanifest">
+
+		<!-- Google reCAPTCHA -->
 		{isContactPage && <script src="https://www.google.com/recaptcha/api.js" async defer></script>}
 	</head>
 	<body>
