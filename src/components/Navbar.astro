@@ -1,9 +1,9 @@
 <nav class="relative w-full text-gray-700 bg-transparent z-30">
     <div class="container mx-auto flex items-center justify-between md:justify-between py-4 px-4">
-        <div class="flex-grow text-center md:hidden">
+        <a href="/" class="flex-grow text-center md:hidden no-underline text-gray-700 focus:outline-none">
             <h1 class="text-xl font-bold">SAGITARIO HOTEL</h1>
             <p class="text-xs tracking-widest">MOQUEGUA</p>
-        </div>
+        </a>
         <button id="menu-button" class="md:hidden text-[#deaa86] focus:outline-none">
             <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16m-7 6h7"></path>
@@ -68,13 +68,19 @@
 
 <script>
     document.addEventListener("DOMContentLoaded", function () {
-        const currentPath = window.location.pathname; // Obtiene la URL actual
+        const currentPath = window.location.pathname;
         const links = document.querySelectorAll("nav a");
+        const menuButton = document.getElementById("menu-button") as HTMLElement;
+        const mobileMenu = document.getElementById("mobile-menu") as HTMLElement;
 
         links.forEach(link => {
             if (link.getAttribute("href") === currentPath) {
-                link.classList.add("text-[#deaa86]", "font-bold"); // Resalta el enlace activo
+                link.classList.add("text-[#deaa86]", "font-bold");
             }
+        });
+
+        menuButton.addEventListener("click", () => {
+            mobileMenu.classList.toggle("hidden");
         });
     });
 </script>
