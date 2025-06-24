@@ -1,10 +1,10 @@
 ---
 const meta = {
-	title: "Hotel Gran Sagitario - Hospedaje en Moquegua con Confort y Calidad",
-	keywords: "Hotel Gran Sagitario Moquegua, hoteles en Moquegua, hospedaje en Moquegua, alojamiento en Moquegua, hotel céntrico en Moquegua, habitaciones en Moquegua, reservar hotel en Moquegua, mejor hotel en Moquegua",
-	description: "Disfruta de una estancia cómoda en el Hotel Gran Sagitario Moquegua. Habitaciones acogedoras, excelente ubicación y servicio de calidad. ¡Reserva ahora!",
-	url: "https://hotelgransagitariomoquegua.com/",
-	image: "https://hotelgransagitariomoquegua.com/imagen_seo.avif"
+	title: "Chaska Valle Green - ubicado en el corazón del Valle Sagrado de los Incas a 5 minutos de la plaza principal de la provincia de Urubamba",
+	keywords: "Chaska Valle Green, hoteles en Cusco, hospedaje en Cusco, alojamiento en Cusco, hotel céntrico en Cusco, habitaciones en Cusco, reservar hotel en Cusco, mejor hotel en Cusco",
+	description: "Disfruta de una estancia cómoda en el Chaska Valle Green. Habitaciones acogedoras, excelente ubicación y servicio de calidad. ¡Reserva ahora!",
+	url: "https://chaskavallegreen.com/",
+	image: "https://chaskavallegreen.com/imagen_seo.avif"
 };
 const { url } = Astro;
 const isContactPage = url.pathname.includes("contacts");
@@ -17,7 +17,7 @@ import "../styles/global.css";
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="robots" content="index, follow" />
 		<meta name="author" content="Rubén Tipiani" />
-		<meta name="copyright" content="Copyright (c) 2025, Hotel Gran Sagitario Moquegua" />
+		<meta name="copyright" content="Copyright (c) 2025, Chaska Valle Green" />
 		<title>
 			{ meta.title }
 		</title>
@@ -25,7 +25,7 @@ import "../styles/global.css";
 		<meta name="keywords" content={meta.keywords} />
 		
 		<!-- Open Graph / Facebook -->
-		<meta property="og:site_name" content="Hotel Gran Sagitario Moquegua" />
+		<meta property="og:site_name" content="Chaska Valle Green" />
 		<meta property="og:title" content={meta.title} />
 		<meta property="og:description" content={meta.description} />
 		<meta property="og:image" content={meta.image} />
@@ -40,7 +40,7 @@ import "../styles/global.css";
 		<meta property="twitter:title" content={meta.title} />
 		<meta property="twitter:description" content={meta.description} />
 		<meta property="twitter:image" content={meta.image} />
-		<meta property="twitter:site" content="@hotelgransagitariomoquegua" />
+		<meta property="twitter:site" content="@chaskavallegreen" />
 
 		<!-- Canonical URL -->
 		<link rel="canonical" href={meta.url} />
@@ -56,7 +56,7 @@ import "../styles/global.css";
 	</head>
 	<body>
 		<slot />
-		<a href="https://wa.link/1yi95t" target="_blank" rel="noopener noreferrer" class="fixed bottom-6 right-6 z-30 w-16 h-16 bg-green-500 text-white rounded-full flex items-center justify-center shadow-xl hover:bg-green-600 transition duration-300 transform hover:scale-110" aria-label="Ir a Whatsapp">
+		<a href="https://wa.link/sp0l65" target="_blank" rel="noopener noreferrer" class="fixed bottom-6 right-6 z-30 w-16 h-16 bg-green-500 text-white rounded-full flex items-center justify-center shadow-xl hover:bg-green-600 transition duration-300 transform hover:scale-110" aria-label="Ir a Whatsapp">
 			<i class="fa-brands fa-whatsapp text-2xl"></i>
 		</a>
 	</body>

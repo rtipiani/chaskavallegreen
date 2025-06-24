@@ -1,51 +1,57 @@
 ---
-const numeroWhatsapp = "999102476";
+const numeroWhatsapp = "51957708697";
 const habitaciones = [
     {
         nombre: "Habitación simple",
         descripcion: "Una habitación espaciosa con vista panorámica.",
-        precio: "S/ 70 - noche",
-        imagen: "/home_bg.png"
+        precio: "S/ 110 - noche",
+        imagen: "/simple.png"
+    },
+    {
+        nombre: "Habitación Matrimonial Queen",
+        descripcion: "Elegancia y comodidad con servicios exclusivos.",
+        precio: "S/ 155 - noche",
+        imagen: "/matrimonial-queen.png"
     },
     {
         nombre: "Habitación Matrimonial",
         descripcion: "Elegancia y comodidad con servicios exclusivos.",
-        precio: "S/ 100 - noche",
-        imagen: "/rooms2.png"
+        precio: "S/ 140 - noche",
+        imagen: "/matrimonial.png"
     },
     {
-        nombre: "Habitación Súper King",
+        nombre: "Habitación Doble",
         descripcion: "Ideal para compartir en un ambiente acogedor.",
-        precio: "S/ 120 - noche",
-        imagen: "/rooms3.png"
+        precio: "S/ 145 - noche",
+        imagen: "/doble.png"
     },
     {
         nombre: "Habitación Familiar",
         descripcion: "Perfecto para el descanso y la comodidad de todos.",
-        precio: "S/ 150 - noche",
-        imagen: "/home_bg.png"
+        precio: "S/ 160 - noche",
+        imagen: "/familiar.png"
     },
     {
-        nombre: "Habitación Cama Queen",
-        descripcion: "Ideal para una estadía placentera.",
-        precio: "S/ 110 - noche",
-        imagen: "/rooms2.png"
+        nombre: "Habitación Triple",
+        descripcion: "Ideal para una estadía placentera y el buen descanso de todos.",
+        precio: "S/ 195 - noche",
+        imagen: "/triple.png"
     }
 ];
 ---
 <section class="py-16 bg-gray-100">
     <div class="max-w-6xl mx-auto text-center mt-12 px-4">
         <h2 class="text-3xl md:text-4xl font-semibold text-gray-800">
-            NUESTRAS <span class="text-[#c39b72]">HABITACIONES</span>
+            NUESTRAS <span class="text-yellow-600">HABITACIONES</span>
         </h2>
         <p class="text-gray-600 text-sm md:text-base mt-2">
-            En HOTEL SAGITARIO, hacemos que tu estadía se convierta en la mejor experiencia.
+            En HOTEL CHASKA GREEN, hacemos que tu estadía se convierta en la mejor experiencia.
         </p>
     </div>
 
     <div class="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto mt-10 px-4">
         {habitaciones.map((habitacion) => {
-            const mensaje = encodeURIComponent(`Hola *Hotel Sagitario*, quiero reservar una *${habitacion.nombre}*.`);
+            const mensaje = encodeURIComponent(`Hola *Hotel Chaska Green*, quiero reservar una *${habitacion.nombre}*.`);
             const linkWhatsapp = `https://wa.me/${numeroWhatsapp}?text=${mensaje}`;
 
             return (
@@ -58,8 +64,8 @@ const habitaciones = [
                     <div class="p-6 text-center">
                         <h3 class="text-xl md:text-2xl font-semibold text-gray-800">{habitacion.nombre}</h3>
                         <p class="text-gray-600 text-sm md:text-base mt-2">{habitacion.descripcion}</p>
-                        <p class="text-[#c39b72] font-semibold mt-2">{habitacion.precio}</p>
-                        <a href={linkWhatsapp} target="_blank" class="mt-4 inline-block px-5 py-2 bg-[#c39b72] text-white font-semibold rounded-lg hover:bg-[#a67a50] transition">
+                        <p class="text-yellow-600 font-semibold mt-2">{habitacion.precio}</p>
+                        <a href={linkWhatsapp} target="_blank" class="mt-4 inline-block px-5 py-2 bg-yellow-600 text-white font-semibold rounded-lg hover:bg-yellow-700 transition">
                             Reservar ahora <i class="fa-brands fa-whatsapp ml-2"></i>
                         </a>
                     </div>

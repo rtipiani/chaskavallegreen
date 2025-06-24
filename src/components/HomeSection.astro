@@ -1,12 +1,86 @@
-<div class="relative h-screen bg-cover bg-center" style="background-image: url('../home_bg.png');">
-    <div class="absolute inset-0 bg-black/45 bg-opacity-40"></div>
+<div id="slider-container" class="relative h-screen overflow-hidden group">
+    <!-- Imagen activa -->
+    <div id="slider" class="absolute inset-0 bg-cover bg-center opacity-100 transition-opacity duration-1000"></div>
+
+    <!-- Superposición oscura -->
+    <div class="absolute inset-0 bg-black/45"></div>
+
+    <!-- Contenido centrado -->
     <div class="relative z-10 flex flex-col items-center justify-center h-full text-white text-center">
-        <h2 class="text-5xl font-bold">
-            Sagitario Gran Hotel
-        </h2>
-        <p class="text-lg tracking-wide">
-            Vive Momentos de Turismo y Aventura
-        </p>
-        <div class="w-20 h-1 bg-[#deaa86] mt-4"></div>
+        <h2 class="text-5xl font-bold">Chaska Valle Green</h2>
+        <p class="text-lg tracking-wide">Vive Momentos de Turismo y Aventura</p>
+        <div class="w-20 h-1 bg-yellow-600 mt-4"></div>
+    </div>
+
+    <!-- Dots -->
+    <div class="absolute bottom-6 left-1/2 transform -translate-x-1/2 z-20 flex space-x-2">
+        <button class="w-3 h-3 rounded-full bg-white/50 hover:bg-white" onclick="goToSlide(0)"></button>
+        <button class="w-3 h-3 rounded-full bg-white/50 hover:bg-white" onclick="goToSlide(1)"></button>
+        <button class="w-3 h-3 rounded-full bg-white/50 hover:bg-white" onclick="goToSlide(2)"></button>
+        <button class="w-3 h-3 rounded-full bg-white/50 hover:bg-white" onclick="goToSlide(3)"></button>
+        <button class="w-3 h-3 rounded-full bg-white/50 hover:bg-white" onclick="goToSlide(4)"></button>
     </div>
 </div>
+
+<script>
+    const slider = document.getElementById('slider');
+    const container = document.getElementById('slider-container');
+    const dots = document.querySelectorAll('button');
+    const images = [
+        '../slide1.png',
+        '../slide2.png',
+        '../slide3.png',
+        '../slide4.png',
+        '../slide5.png'
+    ];
+    let index = 0;
+    let interval = 0;
+
+    function updateSlide() {
+        if (!slider) return;
+
+        slider.classList.remove('opacity-100');
+        slider.classList.add('opacity-0');
+
+        setTimeout(() => {
+            slider.style.backgroundImage = `url('${images[index]}')`;
+            slider.classList.remove('opacity-0');
+            slider.classList.add('opacity-100');
+        }, 300);
+
+        dots.forEach((dot, i) => {
+            dot.classList.toggle('bg-white', i === index);
+            dot.classList.toggle('bg-white/50', i !== index);
+        });
+    }
+
+    function nextSlide() {
+        index = (index + 1) % images.length;
+        updateSlide();
+    }
+
+    function goToSlide(i: number) {
+        index = i;
+        updateSlide();
+        resetInterval();
+    }
+
+    function startInterval() {
+        interval = setInterval(nextSlide, 5000);
+    }
+
+    function resetInterval() {
+        clearInterval(interval);
+        startInterval();
+    }
+
+    if (container && slider) {
+        startInterval();
+
+        container.addEventListener('mouseenter', () => clearInterval(interval));
+        container.addEventListener('mouseleave', startInterval);
+    }
+
+    // Iniciar con primera imagen
+    updateSlide();
+</script>
