@@ -1,6 +1,9 @@
 <div id="slider-container" class="relative h-screen overflow-hidden group">
     <!-- Imagen activa -->
-    <div id="slider" class="absolute inset-0 bg-cover bg-center opacity-100 transition-opacity duration-1000"></div>
+    <div id="slider" class="absolute inset-0 bg-cover bg-center opacity-100 transition-opacity duration-1000 z-0"></div>
+
+    <!-- Capa de imagen siguiente -->
+    <div id="slider-next" class="absolute inset-0 bg-cover bg-center transition-opacity duration-1000 opacity-0 z-0"></div>
 
     <!-- Superposición oscura -->
     <div class="absolute inset-0 bg-black/45"></div>
@@ -23,8 +26,9 @@
 </div>
 
 <script>
-    const slider = document.getElementById('slider');
-    const container = document.getElementById('slider-container');
+    const slider = document.getElementById('slider') as HTMLDivElement;
+    const sliderNext = document.getElementById('slider-next') as HTMLDivElement;
+    const container = document.getElementById('slider-container') as HTMLDivElement;
     const dots = document.querySelectorAll('button');
     const images = [
         '../slide1.png',
@@ -33,20 +37,23 @@
         '../slide4.png',
         '../slide5.png'
     ];
+
     let index = 0;
-    let interval = 0;
+    let interval: number;
+
+    // Tipado explícito: HTMLDivElement
+    let current: HTMLDivElement = slider;
+    let next: HTMLDivElement = sliderNext;
 
     function updateSlide() {
-        if (!slider) return;
+        next.style.backgroundImage = `url('${images[index]}')`;
 
-        slider.classList.remove('opacity-100');
-        slider.classList.add('opacity-0');
+        next.classList.add('opacity-100');
+        current.classList.remove('opacity-100');
+        current.classList.add('opacity-0');
 
-        setTimeout(() => {
-            slider.style.backgroundImage = `url('${images[index]}')`;
-            slider.classList.remove('opacity-0');
-            slider.classList.add('opacity-100');
-        }, 300);
+        // Intercambiar referencias
+        [current, next] = [next, current];
 
         dots.forEach((dot, i) => {
             dot.classList.toggle('bg-white', i === index);
@@ -59,14 +66,15 @@
         updateSlide();
     }
 
-    function goToSlide(i: number) {
+    // Lo exponemos a window para que funcione con onclick
+    (window as any).goToSlide = function(i: number) {
         index = i;
         updateSlide();
         resetInterval();
-    }
+    };
 
     function startInterval() {
-        interval = setInterval(nextSlide, 5000);
+        interval = window.setInterval(nextSlide, 3000);
     }
 
     function resetInterval() {
@@ -74,13 +82,11 @@
         startInterval();
     }
 
-    if (container && slider) {
-        startInterval();
-
-        container.addEventListener('mouseenter', () => clearInterval(interval));
-        container.addEventListener('mouseleave', startInterval);
-    }
-
-    // Iniciar con primera imagen
+    // Iniciar slider
+    current.style.backgroundImage = `url('${images[index]}')`;
     updateSlide();
+    startInterval();
+
+    container.addEventListener('mouseenter', () => clearInterval(interval));
+    container.addEventListener('mouseleave', startInterval);
 </script>
