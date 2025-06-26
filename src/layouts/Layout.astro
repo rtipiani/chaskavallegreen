@@ -3,8 +3,8 @@ const meta = {
 	title: "Chaska Valle Green - ubicado en el corazón del Valle Sagrado de los Incas a 5 minutos de la plaza principal de la provincia de Urubamba",
 	keywords: "Chaska Valle Green, hoteles en Cusco, hospedaje en Cusco, alojamiento en Cusco, hotel céntrico en Cusco, habitaciones en Cusco, reservar hotel en Cusco, mejor hotel en Cusco",
 	description: "Disfruta de una estancia cómoda en el Chaska Valle Green. Habitaciones acogedoras, excelente ubicación y servicio de calidad. ¡Reserva ahora!",
-	url: "https://chaskavallegreen.com/",
-	image: "https://chaskavallegreen.com/imagen_seo.avif"
+	url: "https://hotelchaskavallegreen.com/",
+	image: "https://hotelchaskavallegreen.com/imagen_seo.avif"
 };
 const { url } = Astro;
 const isContactPage = url.pathname.includes("contacts");
@@ -17,7 +17,7 @@ import "../styles/global.css";
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="robots" content="index, follow" />
 		<meta name="author" content="Rubén Tipiani" />
-		<meta name="copyright" content="Copyright (c) 2025, Chaska Valle Green" />
+		<meta name="copyright" content="Copyright (c) 2025, Hotel Chaska Valle Green" />
 		<title>
 			{ meta.title }
 		</title>
@@ -25,7 +25,7 @@ import "../styles/global.css";
 		<meta name="keywords" content={meta.keywords} />
 		
 		<!-- Open Graph / Facebook -->
-		<meta property="og:site_name" content="Chaska Valle Green" />
+		<meta property="og:site_name" content="Hotel Chaska Valle Green" />
 		<meta property="og:title" content={meta.title} />
 		<meta property="og:description" content={meta.description} />
 		<meta property="og:image" content={meta.image} />
@@ -40,7 +40,7 @@ import "../styles/global.css";
 		<meta property="twitter:title" content={meta.title} />
 		<meta property="twitter:description" content={meta.description} />
 		<meta property="twitter:image" content={meta.image} />
-		<meta property="twitter:site" content="@chaskavallegreen" />
+		<meta property="twitter:site" content="@hotelchaskavallegreen" />
 
 		<!-- Canonical URL -->
 		<link rel="canonical" href={meta.url} />
