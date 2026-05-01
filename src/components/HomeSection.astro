@@ -1,9 +1,9 @@
 <div id="slider-container" class="relative h-screen overflow-hidden group">
     <!-- Imagen activa -->
-    <div id="slider" class="absolute inset-0 bg-cover bg-center opacity-100 transition-opacity duration-1000 z-0"></div>
+    <div id="slider" class="absolute inset-0 bg-cover bg-center opacity-100 transition-opacity duration-1000 z-0 will-change-opacity"></div>
 
     <!-- Capa de imagen siguiente -->
-    <div id="slider-next" class="absolute inset-0 bg-cover bg-center transition-opacity duration-1000 opacity-0 z-0"></div>
+    <div id="slider-next" class="absolute inset-0 bg-cover bg-center transition-opacity duration-1000 opacity-0 z-0 will-change-opacity"></div>
 
     <!-- Superposición oscura -->
     <div class="absolute inset-0 bg-black/45"></div>
@@ -16,12 +16,22 @@
     </div>
 
     <!-- Dots -->
-    <div class="absolute bottom-6 left-1/2 transform -translate-x-1/2 z-20 flex space-x-2">
-        <button class="w-3 h-3 rounded-full bg-white/50 hover:bg-white" aria-label="Ir al slide 0" onclick="goToSlide(0)"></button>
-        <button class="w-3 h-3 rounded-full bg-white/50 hover:bg-white" aria-label="Ir al slide 1" onclick="goToSlide(1)"></button>
-        <button class="w-3 h-3 rounded-full bg-white/50 hover:bg-white" aria-label="Ir al slide 2" onclick="goToSlide(2)"></button>
-        <button class="w-3 h-3 rounded-full bg-white/50 hover:bg-white" aria-label="Ir al slide 3" onclick="goToSlide(3)"></button>
-        <button class="w-3 h-3 rounded-full bg-white/50 hover:bg-white" aria-label="Ir al slide 4" onclick="goToSlide(4)"></button>
+    <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 z-20 flex space-x-1">
+        <button class="w-10 h-10 flex items-center justify-center group" aria-label="Ir al slide 0" onclick="goToSlide(0)">
+            <div class="slider-dot w-3 h-3 rounded-full bg-white/50 group-hover:bg-white transition-colors"></div>
+        </button>
+        <button class="w-10 h-10 flex items-center justify-center group" aria-label="Ir al slide 1" onclick="goToSlide(1)">
+            <div class="slider-dot w-3 h-3 rounded-full bg-white/50 group-hover:bg-white transition-colors"></div>
+        </button>
+        <button class="w-10 h-10 flex items-center justify-center group" aria-label="Ir al slide 2" onclick="goToSlide(2)">
+            <div class="slider-dot w-3 h-3 rounded-full bg-white/50 group-hover:bg-white transition-colors"></div>
+        </button>
+        <button class="w-10 h-10 flex items-center justify-center group" aria-label="Ir al slide 3" onclick="goToSlide(3)">
+            <div class="slider-dot w-3 h-3 rounded-full bg-white/50 group-hover:bg-white transition-colors"></div>
+        </button>
+        <button class="w-10 h-10 flex items-center justify-center group" aria-label="Ir al slide 4" onclick="goToSlide(4)">
+            <div class="slider-dot w-3 h-3 rounded-full bg-white/50 group-hover:bg-white transition-colors"></div>
+        </button>
     </div>
 </div>
 
@@ -29,7 +39,7 @@
     const slider = document.getElementById('slider') as HTMLDivElement;
     const sliderNext = document.getElementById('slider-next') as HTMLDivElement;
     const container = document.getElementById('slider-container') as HTMLDivElement;
-    const dots = document.querySelectorAll('button');
+    const dots = document.querySelectorAll('.slider-dot');
     const images = [
         '../slide1.avif',
         '../slide2.avif',

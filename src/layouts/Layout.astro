@@ -56,7 +56,9 @@ import "../styles/global.css";
 		{isContactPage && <script src="https://www.google.com/recaptcha/api.js" async defer></script>}
 	</head>
 	<body>
-		<slot />
+		<main>
+			<slot />
+		</main>
 		<a href="https://wa.link/sp0l65" target="_blank" rel="noopener noreferrer" class="fixed bottom-6 right-6 z-30 w-16 h-16 bg-green-500 text-white rounded-full flex items-center justify-center shadow-xl hover:bg-green-600 transition duration-300 transform hover:scale-110" aria-label="Ir a Whatsapp">
 			<i class="fa-brands fa-whatsapp text-2xl"></i>
 		</a>
