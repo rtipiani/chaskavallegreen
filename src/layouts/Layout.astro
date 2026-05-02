@@ -1,15 +1,18 @@
 ---
 const meta = {
-	title: "Chaska Valle Green - ubicado en el corazón del Valle Sagrado de los Incas a 5 minutos de la plaza principal de la provincia de Urubamba",
-	keywords: "Chaska Valle Green, hoteles en Cusco, hospedaje en Cusco, alojamiento en Cusco, hotel céntrico en Cusco, habitaciones en Cusco, reservar hotel en Cusco, mejor hotel en Cusco",
-	description: "Disfruta de una estancia cómoda en el Chaska Valle Green. Habitaciones acogedoras, excelente ubicación y servicio de calidad. ¡Reserva ahora!",
+	title: "Chaska Valle Green - Hotel en el valle sagrado de los incas - Ubicado en el corazón del Valle Sagrado de los Incas a 5 minutos de la plaza principal de la provincia de Urubamba",
+	keywords:
+		"Chaska Valle Green, hoteles en Cusco, hospedaje en Cusco, alojamiento en Cusco, hotel céntrico en Cusco, habitaciones en Cusco, reservar hotel en Cusco, mejor hotel en Cusco",
+	description:
+		"Disfruta de una estancia cómoda en el hotel Chaska Valle Green. Habitaciones acogedoras, excelente ubicación y servicio de calidad a 5 minutos de la plaza principal de Urubamba. ¡Reserva ahora!",
 	url: "https://hotelchaskavallegreen.com/",
-	image: "https://hotelchaskavallegreen.com/imagen_seo.avif"
+	image: "https://hotelchaskavallegreen.com/imagen_seo.avif",
 };
 const { url } = Astro;
 const isContactPage = url.pathname.includes("contacts");
 import "../styles/global.css";
 ---
+
 <!doctype html>
 <html lang="es">
 	<head>
@@ -17,13 +20,16 @@ import "../styles/global.css";
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="robots" content="index, follow" />
 		<meta name="author" content="Rubén Tipiani" />
-		<meta name="copyright" content="Copyright (c) 2025, Hotel Chaska Valle Green" />
+		<meta
+			name="copyright"
+			content="Copyright (c) 2025, Hotel Chaska Valle Green"
+		/>
 		<title>
-			{ meta.title }
+			{meta.title}
 		</title>
 		<meta name="description" content={meta.description} />
 		<meta name="keywords" content={meta.keywords} />
-		
+
 		<!-- Open Graph / Facebook -->
 		<meta property="og:site_name" content="Hotel Chaska Valle Green" />
 		<meta property="og:title" content={meta.title} />
@@ -41,25 +47,56 @@ import "../styles/global.css";
 		<meta property="twitter:description" content={meta.description} />
 		<meta property="twitter:image" content={meta.image} />
 		<meta property="twitter:site" content="@hotelchaskavallegreen" />
-		<meta name="google-site-verification" content="ziunduFaSq1K0stHJTa7Ttijv2kYTZztcz0wePK4YX8" />
+		<meta
+			name="google-site-verification"
+			content="ziunduFaSq1K0stHJTa7Ttijv2kYTZztcz0wePK4YX8"
+		/>
 
 		<!-- Canonical URL -->
 		<link rel="canonical" href={meta.url} />
 
 		<!-- Favicon -->
-		<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-		<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-		<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-		<link rel="manifest" href="/site.webmanifest">
+		<link
+			rel="apple-touch-icon"
+			sizes="180x180"
+			href="/apple-touch-icon.png"
+		/>
+		<link
+			rel="icon"
+			type="image/png"
+			sizes="32x32"
+			href="/favicon-32x32.png"
+		/>
+		<link
+			rel="icon"
+			type="image/png"
+			sizes="16x16"
+			href="/favicon-16x16.png"
+		/>
+		<link rel="manifest" href="/site.webmanifest" />
 
 		<!-- Google reCAPTCHA -->
-		{isContactPage && <script src="https://www.google.com/recaptcha/api.js" async defer></script>}
+		{
+			isContactPage && (
+				<script
+					src="https://www.google.com/recaptcha/api.js"
+					async
+					defer
+				/>
+			)
+		}
 	</head>
 	<body>
 		<main>
 			<slot />
 		</main>
-		<a href="https://wa.link/sp0l65" target="_blank" rel="noopener noreferrer" class="fixed bottom-6 right-6 z-30 w-16 h-16 bg-green-500 text-white rounded-full flex items-center justify-center shadow-xl hover:bg-green-600 transition duration-300 transform hover:scale-110" aria-label="Ir a Whatsapp">
+		<a
+			href="https://wa.link/sp0l65"
+			target="_blank"
+			rel="noopener noreferrer"
+			class="fixed bottom-6 right-6 z-30 w-16 h-16 bg-green-500 text-white rounded-full flex items-center justify-center shadow-xl hover:bg-green-600 transition duration-300 transform hover:scale-110"
+			aria-label="Ir a Whatsapp"
+		>
 			<i class="fa-brands fa-whatsapp text-2xl"></i>
 		</a>
 	</body>
