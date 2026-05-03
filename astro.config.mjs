@@ -11,7 +11,23 @@ export default defineConfig({
     },
     vite: {
         // @ts-ignore
-        plugins: [tailwindcss()]
+        plugins: [
+            tailwindcss(),
+            {
+                name: 'font-display-swap',
+                enforce: 'post',
+                generateBundle(options, bundle) {
+                    for (const fileName in bundle) {
+                        if (fileName.endsWith('.css')) {
+                            const chunk = bundle[fileName];
+                            if (chunk.type === 'asset' && typeof chunk.source === 'string') {
+                                chunk.source = chunk.source.replace(/font-display:\s*block/g, 'font-display: swap');
+                            }
+                        }
+                    }
+                }
+            }
+        ]
     },
     integrations: [sitemap()]
 });

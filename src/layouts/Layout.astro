@@ -3,7 +3,8 @@ const {
 	title = "Chaska Valle Green | Hotel en Urubamba | Hotel en el valle sagrado | Ubicado a 5 minutos de la plaza principal de Urubamba",
 	description = "Disfruta de una estancia cómoda en el hotel Chaska Valle Green. Habitaciones acogedoras, excelente ubicación y servicio de calidad a 5 minutos de la plaza principal de Urubamba. ¡Reserva ahora!",
 	keywords = "Chaska Valle Green, hoteles en Cusco, hospedaje en Cusco, alojamiento en Cusco, hotel céntrico en Cusco, habitaciones en Cusco, reservar hotel en Cusco, mejor hotel en Cusco",
-	image = "https://hotelchaskavallegreen.com/imagen_seo.avif"
+	image = "https://hotelchaskavallegreen.com/imagen_seo.avif",
+	preloadLCP
 } = Astro.props;
 
 const meta = {
@@ -59,6 +60,9 @@ import "../styles/global.css";
 
 		<!-- Canonical URL -->
 		<link rel="canonical" href={meta.url} />
+
+		<!-- Preload LCP Image -->
+		{preloadLCP && <link rel="preload" as="image" href={preloadLCP} fetchpriority="high" />}
 
 		<!-- Structured Data / JSON-LD -->
 		<script type="application/ld+json" set:html={JSON.stringify({
