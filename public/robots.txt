@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://hotelchaskavallegreen.com/sitemap-index.xml

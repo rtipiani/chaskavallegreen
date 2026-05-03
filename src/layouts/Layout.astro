@@ -1,12 +1,17 @@
 ---
+const { 
+	title = "Chaska Valle Green | Hotel en Urubamba | Hotel en el valle sagrado | Ubicado a 5 minutos de la plaza principal de Urubamba",
+	description = "Disfruta de una estancia cómoda en el hotel Chaska Valle Green. Habitaciones acogedoras, excelente ubicación y servicio de calidad a 5 minutos de la plaza principal de Urubamba. ¡Reserva ahora!",
+	keywords = "Chaska Valle Green, hoteles en Cusco, hospedaje en Cusco, alojamiento en Cusco, hotel céntrico en Cusco, habitaciones en Cusco, reservar hotel en Cusco, mejor hotel en Cusco",
+	image = "https://hotelchaskavallegreen.com/imagen_seo.avif"
+} = Astro.props;
+
 const meta = {
-	title: "Chaska Valle Green - Hotel en el valle sagrado de los incas - Ubicado en el corazón del Valle Sagrado de los Incas a 5 minutos de la plaza principal de la provincia de Urubamba",
-	keywords:
-		"Chaska Valle Green, hoteles en Cusco, hospedaje en Cusco, alojamiento en Cusco, hotel céntrico en Cusco, habitaciones en Cusco, reservar hotel en Cusco, mejor hotel en Cusco",
-	description:
-		"Disfruta de una estancia cómoda en el hotel Chaska Valle Green. Habitaciones acogedoras, excelente ubicación y servicio de calidad a 5 minutos de la plaza principal de Urubamba. ¡Reserva ahora!",
-	url: "https://hotelchaskavallegreen.com/",
-	image: "https://hotelchaskavallegreen.com/imagen_seo.avif",
+	title,
+	keywords,
+	description,
+	url: Astro.url.href,
+	image,
 };
 const { url } = Astro;
 const isContactPage = url.pathname.includes("contacts");
@@ -54,6 +59,24 @@ import "../styles/global.css";
 
 		<!-- Canonical URL -->
 		<link rel="canonical" href={meta.url} />
+
+		<!-- Structured Data / JSON-LD -->
+		<script type="application/ld+json" set:html={JSON.stringify({
+			"@context": "https://schema.org",
+			"@type": "Hotel",
+			"name": "Chaska Valle Green",
+			"image": meta.image,
+			"description": meta.description,
+			"url": "https://hotelchaskavallegreen.com/",
+			"telephone": "+51957708697",
+			"address": {
+				"@type": "PostalAddress",
+				"streetAddress": "Urubamba",
+				"addressLocality": "Urubamba",
+				"addressRegion": "Cusco",
+				"addressCountry": "PE"
+			}
+		})} />
 
 		<!-- Favicon -->
 		<link

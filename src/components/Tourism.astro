@@ -24,7 +24,7 @@ const lugares = [
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-10 max-w-6xl mx-auto">
         {lugares.map((lugar) => (
             <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-                <img src={lugar.img} alt={lugar.alt} class="w-full h-72 object-cover" />
+                <img src={lugar.img} alt={lugar.alt} class="w-full h-72 object-cover" width="800" height="600" />
                 <div class="p-6">
                     <h3 class="text-lg text-center font-bold text-yellow-800">{lugar.nombre}</h3>
                     <p class="text-gray-600 text-center text-sm">{lugar.descripcion}</p>
