@@ -119,25 +119,30 @@ declare global {
             }
 
             try {
-                const response = await fetch("/api/send-email", {
+                const response = await fetch("https://formsubmit.co/ajax/reservas@hotelchaskavallegreen.com", {
                     method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(formData)
+                    headers: { 
+                        "Content-Type": "application/json",
+                        "Accept": "application/json"
+                    },
+                    body: JSON.stringify({
+                        ...formData,
+                        _subject: `Nuevo mensaje de: ${formData.name}`,
+                        _template: "table"
+                    })
                 });
 
-                const result = await response.json();
-
                 if (response.ok) {
-                    statusMessage.textContent = "✅ ¡Mensaje enviado correctamente!";
+                    statusMessage.textContent = "✅ ¡Mensaje enviado correctamente! Le responderemos pronto.";
                     statusMessage.classList.remove("hidden", "text-yellow-800");
                     statusMessage.classList.add("text-yellow-700");
                     form.reset();
-                    window.grecaptcha.reset();
+                    if (window.grecaptcha) window.grecaptcha.reset();
                 } else {
-                    throw new Error(result.error || "Error al enviar el mensaje.");
+                    throw new Error("Error al enviar el mensaje.");
                 }
-            } catch {
-                statusMessage.textContent = "❌ Hubo un error al enviar el mensaje.";
+            } catch (error) {
+                statusMessage.textContent = "❌ Hubo un error al enviar el mensaje. Inténtelo más tarde.";
                 statusMessage.classList.remove("hidden", "text-yellow-700");
                 statusMessage.classList.add("text-yellow-800");
             } finally {

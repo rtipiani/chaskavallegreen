@@ -29,14 +29,30 @@
             <label for="fechaIngreso" class="block text-gray-800 font-semibold mb-1">
                 Fecha de Ingreso
             </label>
-            <input type="date" id="fechaIngreso" name="fechaIngreso" class="w-full px-4 py-2 focus:outline focus:outline-yellow-600 rounded-md bg-gray-50">
+            <input 
+                type="text" 
+                id="fechaIngreso" 
+                name="fechaIngreso" 
+                placeholder="Selecciona fecha de ingreso"
+                onfocus="(this.type='date')"
+                onblur="if(!this.value)this.type='text'"
+                class="w-full px-4 py-2 focus:outline focus:outline-yellow-600 rounded-md bg-gray-50 text-gray-700 appearance-none min-h-[44px]"
+            >
         </div>
 
         <div>
             <label for="fechaSalida" class="block text-gray-800 font-semibold mb-1">
                 Fecha de Salida
             </label>
-            <input type="date" id="fechaSalida" name="fechaSalida" class="w-full px-4 py-2 focus:outline focus:outline-yellow-600 rounded-md bg-gray-50">
+            <input 
+                type="text" 
+                id="fechaSalida" 
+                name="fechaSalida" 
+                placeholder="Selecciona fecha de salida"
+                onfocus="(this.type='date')"
+                onblur="if(!this.value)this.type='text'"
+                class="w-full px-4 py-2 focus:outline focus:outline-yellow-600 rounded-md bg-gray-50 text-gray-700 appearance-none min-h-[44px]"
+            >
         </div>
 
         <div class="md:col-span-2 mt-4">

@@ -1,43 +1,62 @@
 ---
+import fs from 'node:fs';
+import path from 'node:path';
+
 const numeroWhatsapp = "51957708697";
-const habitaciones = [
+
+const habitacionesBasicas = [
     {
         nombre: "Habitación simple",
+        folder: "simple",
         descripcion: "Una habitación espaciosa con vista panorámica.",
-        precio: "S/ 110 - noche",
-        imagen: "/simple.avif"
+        precio: "S/ 110 - noche"
     },
     {
         nombre: "Habitación Matrimonial Queen",
+        folder: "matrimonial-queen",
         descripcion: "Elegancia y comodidad con servicios exclusivos.",
-        precio: "S/ 155 - noche",
-        imagen: "/matrimonial-queen.avif"
+        precio: "S/ 155 - noche"
     },
     {
         nombre: "Habitación Matrimonial",
+        folder: "matrimonial",
         descripcion: "Elegancia y comodidad con servicios exclusivos.",
-        precio: "S/ 140 - noche",
-        imagen: "/matrimonial.avif"
+        precio: "S/ 140 - noche"
     },
     {
         nombre: "Habitación Doble",
+        folder: "doble",
         descripcion: "Ideal para compartir en un ambiente acogedor.",
-        precio: "S/ 145 - noche",
-        imagen: "/doble.avif"
+        precio: "S/ 145 - noche"
     },
     {
         nombre: "Habitación Familiar",
+        folder: "familiar",
         descripcion: "Perfecto para el descanso y la comodidad de todos.",
-        precio: "S/ 160 - noche",
-        imagen: "/familiar.avif"
+        precio: "S/ 160 - noche"
     },
     {
         nombre: "Habitación Triple",
+        folder: "triple",
         descripcion: "Ideal para una estadía placentera y el buen descanso de todos.",
-        precio: "S/ 195 - noche",
-        imagen: "/triple.avif"
+        precio: "S/ 195 - noche"
     }
 ];
+
+const habitaciones = habitacionesBasicas.map(h => {
+    const dirPath = path.join(process.cwd(), 'public', 'habitaciones', h.folder);
+    let imagenes: string[] = [];
+    try {
+        if (fs.existsSync(dirPath)) {
+            imagenes = fs.readdirSync(dirPath)
+                .filter(file => /\.(avif|webp|png|jpg|jpeg)$/i.test(file))
+                .map(file => `/habitaciones/${h.folder}/${file}`);
+        }
+    } catch (error) {
+        console.error(`Error leyendo la carpeta de ${h.nombre}:`, error);
+    }
+    return { ...h, imagenes };
+});
 ---
 <section class="py-16 bg-gray-100">
     <div class="max-w-6xl mx-auto text-center mt-12 px-4">
@@ -55,16 +74,33 @@ const habitaciones = [
             const linkWhatsapp = `https://wa.me/${numeroWhatsapp}?text=${mensaje}`;
 
             return (
-                <div class="relative overflow-hidden rounded-xl shadow-lg bg-white">
-                    <img 
-                        src={habitacion.imagen} 
-                        alt={habitacion.nombre} 
-                        class="w-full h-64 object-cover transition-transform duration-300 lg:group-hover:scale-105"
-                        width="800" height="600"
-                    />
-                    <div class="p-6 text-center">
-                        <h3 class="text-xl md:text-2xl font-semibold text-gray-800">{habitacion.nombre}</h3>
-                        <p class="text-gray-600 text-sm md:text-base mt-2">{habitacion.descripcion}</p>
+                <div class="relative overflow-hidden rounded-xl shadow-lg bg-white group flex flex-col h-full">
+                    <div class="swiper-container room-slider w-full h-64 overflow-hidden relative select-none">
+                        <div class="swiper-wrapper h-full">
+                            {habitacion.imagenes.map((img) => (
+                                <div class="swiper-slide h-full">
+                                    <img 
+                                        src={img} 
+                                        alt={habitacion.nombre} 
+                                        class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 pointer-events-none"
+                                        loading="lazy"
+                                        width="800" height="600"
+                                    />
+                                </div>
+                            ))}
+                        </div>
+                        {habitacion.imagenes.length > 1 && (
+                            <>
+                                <div class="swiper-pagination pointer-events-none"></div>
+                                <div class="swiper-button-next !text-white !after:text-xl select-none"></div>
+                                <div class="swiper-button-prev !text-white !after:text-xl select-none"></div>
+                            </>
+                        )}
+                    </div>
+                    
+                    <div class="p-6 text-center flex flex-col flex-grow">
+                        <h3 class="text-xl md:text-2xl font-semibold text-gray-800 select-none">{habitacion.nombre}</h3>
+                        <p class="text-gray-600 text-sm md:text-base mt-2 flex-grow">{habitacion.descripcion}</p>
                         <p class="text-yellow-800 font-semibold mt-2">{habitacion.precio}</p>
                         <p class="text-gray-600 font-medium text-sm mt-1">Desayuno incluido</p>
                         <a 
@@ -80,3 +116,62 @@ const habitaciones = [
         })}
     </div>
 </section>
+
+<style>
+    /* Swiper custom styles if needed */
+    .room-slider :global(.swiper-pagination-bullet-active) {
+        background: #854d0e !important; /* text-yellow-800 */
+    }
+    .room-slider :global(.swiper-button-next),
+    .room-slider :global(.swiper-button-prev) {
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        user-select: none;
+        -webkit-tap-highlight-color: transparent;
+    }
+    .group:hover .room-slider :global(.swiper-button-next),
+    .group:hover .room-slider :global(.swiper-button-prev) {
+        opacity: 1;
+    }
+</style>
+
+<script>
+    import Swiper from 'swiper';
+    import { Navigation, Pagination, Autoplay } from 'swiper/modules';
+    import 'swiper/css';
+    import 'swiper/css/navigation';
+    import 'swiper/css/pagination';
+
+    // Initialize Swiper
+    const initSwiper = () => {
+        const sliders = document.querySelectorAll('.room-slider');
+        
+        sliders.forEach((sliderElement) => {
+            const slideCount = sliderElement.querySelectorAll('.swiper-slide').length;
+            
+            new Swiper(sliderElement as HTMLElement, {
+                modules: [Navigation, Pagination, Autoplay],
+                loop: slideCount > 1, // Solo activar loop si hay más de 1 imagen
+                pagination: {
+                    el: sliderElement.querySelector('.swiper-pagination') as HTMLElement,
+                    clickable: true,
+                },
+                navigation: {
+                    nextEl: sliderElement.querySelector('.swiper-button-next') as HTMLElement,
+                    prevEl: sliderElement.querySelector('.swiper-button-prev') as HTMLElement,
+                },
+                autoplay: slideCount > 1 ? {
+                    delay: 5000,
+                    disableOnInteraction: false,
+                    pauseOnMouseEnter: true
+                } : false, // Solo activar autoplay si hay más de 1 imagen
+            });
+        });
+    };
+
+    // Initialize on page load
+    initSwiper();
+
+    // Re-initialize if using View Transitions or similar
+    document.addEventListener('astro:after-swap', initSwiper);
+</script>

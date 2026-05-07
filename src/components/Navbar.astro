@@ -1,60 +1,58 @@
-<nav class="relative w-full text-gray-700 bg-transparent z-30">
-    <div class="container mx-auto flex items-center justify-between md:justify-between py-4 px-4">
-        <a href="/" class="flex-grow text-left md:hidden no-underline focus:outline-none">
-            <img src="/logo.avif" alt="Chaska Valle Green" class="h-16 w-auto max-h-20" width="89" height="64" />
+<nav class="relative w-full text-gray-700 bg-white/95 backdrop-blur-sm z-30 border-b border-gray-50 shadow-sm">
+    <div class="container mx-auto flex items-center justify-between py-2 md:py-1 px-4">
+        <!-- Mobile Logo and Menu Button -->
+        <a href="/" class="md:hidden no-underline focus:outline-none py-2">
+            <img src="/logo.avif" alt="Chaska Valle Green" class="h-12 w-auto" width="89" height="64" />
         </a>
         <button id="menu-button" aria-label="Abrir menú de navegación" class="md:hidden text-yellow-800 focus:outline-none">
-            <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16m-7 6h7"></path>
             </svg>
         </button>
 
-        <ul id="nav-links" class="hidden md:flex space-x-6">
-            <li>
-                <a href="/" class="hover:text-yellow-800">INICIO</a>
-            </li>
-            <li>
-                <a href="/abouts" class="hover:text-yellow-800">NOSOTROS</a>
-            </li>
-            <li>
-                <a href="/rooms" class="hover:text-yellow-800">HABITACIONES</a>
-            </li>
-        </ul>
-        <div class="text-center flex-grow hidden md:block">
-            <img src="/logo.avif" alt="Chaska Valle Green" class="mx-auto h-20 w-auto max-h-20" width="112" height="80" />
+        <!-- Desktop Navigation -->
+        <div class="hidden md:flex items-center justify-center w-full gap-4 lg:gap-12">
+            <ul class="flex items-center space-x-4 lg:space-x-8 text-[11px] lg:text-[13px] font-bold tracking-widest">
+                <li>
+                    <a href="/" class="hover:text-yellow-800 transition-colors duration-300">INICIO</a>
+                </li>
+                <li>
+                    <a href="/abouts" class="hover:text-yellow-800 transition-colors duration-300">NOSOTROS</a>
+                </li>
+                <li>
+                    <a href="/rooms" class="hover:text-yellow-800 transition-colors duration-300">HABITACIONES</a>
+                </li>
+            </ul>
+
+            <div class="flex-shrink-0 py-2">
+                <a href="/" class="block hover:scale-105 transition-transform duration-300">
+                    <img src="/logo.avif" alt="Chaska Valle Green" class="h-16 lg:h-20 w-auto" width="112" height="80" />
+                </a>
+            </div>
+
+            <ul class="flex items-center space-x-4 lg:space-x-8 text-[11px] lg:text-[13px] font-bold tracking-widest">
+                <li>
+                    <a href="/gallery" class="hover:text-yellow-800 transition-colors duration-300">GALERÍA</a>
+                </li>
+                <li>
+                    <a href="/reservation" class="hover:text-yellow-800 transition-colors duration-300">RESERVAS</a>
+                </li>
+                <li>
+                    <a href="/contacts" class="hover:text-yellow-800 transition-colors duration-300">CONTÁCTENOS</a>
+                </li>
+            </ul>
         </div>
-        <ul class="hidden md:flex space-x-6">
-            <li>
-                <a href="/gallery" class="hover:text-yellow-800">GALERÍA</a>
-            </li>
-            <li>
-                <a href="/reservation" class="hover:text-yellow-800">RESERVAS</a>
-            </li>
-            <li>
-                <a href="/contacts" class="hover:text-yellow-800">CONTÁCTENOS</a>
-            </li>
-        </ul>
     </div>
-    <div id="mobile-menu" class="hidden absolute top-full left-0 w-full bg-white text-gray-700">
-        <ul class="flex flex-col items-center space-y-4 py-4">
-            <li>
-                <a href="/" class="hover:text-yellow-800">INICIO</a>
-            </li>
-            <li>
-                <a href="/abouts" class="hover:text-yellow-800">NOSOTROS</a>
-            </li>
-            <li>
-                <a href="/rooms" class="hover:text-yellow-800">HABITACIONES</a>
-            </li>
-            <li>
-                <a href="/gallery" class="hover:text-yellow-800">GALERÍA</a>
-            </li>
-            <li>
-                <a href="/reservation" class="hover:text-yellow-800">RESERVAS</a>
-            </li>
-            <li>
-                <a href="/contacts" class="hover:text-yellow-800">CONTÁCTENOS</a>
-            </li>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="hidden absolute top-full left-0 w-full bg-white text-gray-700 shadow-xl border-t border-gray-100 animate-fade-in">
+        <ul class="flex flex-col items-center space-y-4 py-8 font-bold tracking-widest text-xs">
+            <li><a href="/" class="hover:text-yellow-800 transition-colors">INICIO</a></li>
+            <li><a href="/abouts" class="hover:text-yellow-800 transition-colors">NOSOTROS</a></li>
+            <li><a href="/rooms" class="hover:text-yellow-800 transition-colors">HABITACIONES</a></li>
+            <li><a href="/gallery" class="hover:text-yellow-800 transition-colors">GALERÍA</a></li>
+            <li><a href="/reservation" class="hover:text-yellow-800 transition-colors">RESERVAS</a></li>
+            <li><a href="/contacts" class="hover:text-yellow-800 transition-colors">CONTÁCTENOS</a></li>
         </ul>
     </div>
 </nav>

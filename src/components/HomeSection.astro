@@ -1,51 +1,101 @@
 <div id="slider-container" class="relative h-screen overflow-hidden group">
     <!-- Imagen activa -->
-    <div id="slider" class="absolute inset-0 bg-cover bg-center opacity-100 transition-opacity duration-1000 z-0 will-change-opacity" style="background-image: url('/slide1.avif');"></div>
+    <div
+        id="slider"
+        class="absolute inset-0 bg-cover bg-center opacity-100 transition-opacity duration-1000 z-0 will-change-opacity"
+        style="background-image: url('/slide1.avif');"
+    >
+    </div>
 
     <!-- Capa de imagen siguiente -->
-    <div id="slider-next" class="absolute inset-0 bg-cover bg-center transition-opacity duration-1000 opacity-0 z-0 will-change-opacity"></div>
+    <div
+        id="slider-next"
+        class="absolute inset-0 bg-cover bg-center transition-opacity duration-1000 opacity-0 z-0 will-change-opacity"
+    >
+    </div>
 
     <!-- Superposición oscura -->
     <div class="absolute inset-0 bg-black/45"></div>
 
     <!-- Contenido centrado -->
-    <div class="relative z-10 flex flex-col items-center justify-center h-full text-white text-center">
+    <div
+        class="relative z-10 flex flex-col items-center justify-center h-full text-white text-center"
+    >
         <h1 class="text-5xl font-bold">Chaska Valle Green</h1>
         <p class="text-lg tracking-wide">Vive Momentos de Turismo y Aventura</p>
         <div class="w-20 h-1 bg-yellow-600 mt-4"></div>
     </div>
 
     <!-- Dots -->
-    <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 z-20 flex space-x-1">
-        <button class="w-10 h-10 flex items-center justify-center group" aria-label="Ir al slide 0" onclick="goToSlide(0)">
-            <div class="slider-dot w-3 h-3 rounded-full bg-white/50 group-hover:bg-white transition-colors"></div>
+    <div
+        class="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20 flex space-x-3"
+    >
+        <button
+            class="flex items-center justify-center group py-4"
+            aria-label="Ir al slide 0"
+            onclick="goToSlide(0)"
+        >
+            <div
+                class="slider-dot w-8 h-1 rounded-full bg-white/30 group-hover:bg-white/60 transition-all duration-500"
+            >
+            </div>
         </button>
-        <button class="w-10 h-10 flex items-center justify-center group" aria-label="Ir al slide 1" onclick="goToSlide(1)">
-            <div class="slider-dot w-3 h-3 rounded-full bg-white/50 group-hover:bg-white transition-colors"></div>
+        <button
+            class="flex items-center justify-center group py-4"
+            aria-label="Ir al slide 1"
+            onclick="goToSlide(1)"
+        >
+            <div
+                class="slider-dot w-8 h-1 rounded-full bg-white/30 group-hover:bg-white/60 transition-all duration-500"
+            >
+            </div>
         </button>
-        <button class="w-10 h-10 flex items-center justify-center group" aria-label="Ir al slide 2" onclick="goToSlide(2)">
-            <div class="slider-dot w-3 h-3 rounded-full bg-white/50 group-hover:bg-white transition-colors"></div>
+        <button
+            class="flex items-center justify-center group py-4"
+            aria-label="Ir al slide 2"
+            onclick="goToSlide(2)"
+        >
+            <div
+                class="slider-dot w-8 h-1 rounded-full bg-white/30 group-hover:bg-white/60 transition-all duration-500"
+            >
+            </div>
         </button>
-        <button class="w-10 h-10 flex items-center justify-center group" aria-label="Ir al slide 3" onclick="goToSlide(3)">
-            <div class="slider-dot w-3 h-3 rounded-full bg-white/50 group-hover:bg-white transition-colors"></div>
+        <button
+            class="flex items-center justify-center group py-4"
+            aria-label="Ir al slide 3"
+            onclick="goToSlide(3)"
+        >
+            <div
+                class="slider-dot w-8 h-1 rounded-full bg-white/30 group-hover:bg-white/60 transition-all duration-500"
+            >
+            </div>
         </button>
-        <button class="w-10 h-10 flex items-center justify-center group" aria-label="Ir al slide 4" onclick="goToSlide(4)">
-            <div class="slider-dot w-3 h-3 rounded-full bg-white/50 group-hover:bg-white transition-colors"></div>
+        <button
+            class="flex items-center justify-center group py-4"
+            aria-label="Ir al slide 4"
+            onclick="goToSlide(4)"
+        >
+            <div
+                class="slider-dot w-8 h-1 rounded-full bg-white/30 group-hover:bg-white/60 transition-all duration-500"
+            >
+            </div>
         </button>
     </div>
 </div>
 
 <script>
-    const slider = document.getElementById('slider') as HTMLDivElement;
-    const sliderNext = document.getElementById('slider-next') as HTMLDivElement;
-    const container = document.getElementById('slider-container') as HTMLDivElement;
-    const dots = document.querySelectorAll('.slider-dot');
+    const slider = document.getElementById("slider") as HTMLDivElement;
+    const sliderNext = document.getElementById("slider-next") as HTMLDivElement;
+    const container = document.getElementById(
+        "slider-container",
+    ) as HTMLDivElement;
+    const dots = document.querySelectorAll(".slider-dot");
     const images = [
-        '../slide1.avif',
-        '../slide2.avif',
-        '../slide3.avif',
-        '../slide4.avif',
-        '../slide5.avif'
+        "/slide1.avif",
+        "/slide2.avif",
+        "/slide3.avif",
+        "/slide4.avif",
+        "/slide5.avif",
     ];
 
     let index = 0;
@@ -58,16 +108,18 @@
     function updateSlide() {
         next.style.backgroundImage = `url('${images[index]}')`;
 
-        next.classList.add('opacity-100');
-        current.classList.remove('opacity-100');
-        current.classList.add('opacity-0');
+        next.classList.add("opacity-100");
+        current.classList.remove("opacity-100");
+        current.classList.add("opacity-0");
 
         // Intercambiar referencias
         [current, next] = [next, current];
 
         dots.forEach((dot, i) => {
-            dot.classList.toggle('bg-white', i === index);
-            dot.classList.toggle('bg-white/50', i !== index);
+            dot.classList.toggle("w-12", i === index);
+            dot.classList.toggle("bg-white", i === index);
+            dot.classList.toggle("w-8", i !== index);
+            dot.classList.toggle("bg-white/30", i !== index);
         });
     }
 
@@ -77,7 +129,7 @@
     }
 
     // Lo exponemos a window para que funcione con onclick
-    (window as any).goToSlide = function(i: number) {
+    (window as any).goToSlide = function (i: number) {
         index = i;
         updateSlide();
         resetInterval();
@@ -97,6 +149,6 @@
     updateSlide();
     startInterval();
 
-    container.addEventListener('mouseenter', () => clearInterval(interval));
-    container.addEventListener('mouseleave', startInterval);
+    container.addEventListener("mouseenter", () => clearInterval(interval));
+    container.addEventListener("mouseleave", startInterval);
 </script>

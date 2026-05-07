@@ -35,34 +35,92 @@ const images = [
     "/galeria/gallery_img34.avif",
     "/galeria/gallery_img35.avif",
     "/galeria/gallery_img36.avif",
-    "/galeria/gallery_img37.avif"
+    "/galeria/gallery_img37.avif",
+    "/galeria/gallery_img38.avif",
+    "/galeria/gallery_img39.avif",
+    "/galeria/gallery_img40.avif",
+    "/galeria/gallery_img41.avif",
+    "/galeria/gallery_img42.avif",
+    "/galeria/gallery_img43.avif",
+    "/galeria/gallery_img44.avif",
+    "/galeria/gallery_img45.avif",
+    "/galeria/gallery_img46.avif",
+    "/galeria/gallery_img47.avif",
+    "/galeria/gallery_img48.avif",
+    "/galeria/gallery_img49.avif",
+    "/galeria/gallery_img50.avif",
+    "/galeria/gallery_img51.avif",
+    "/galeria/gallery_img52.avif",
+    "/galeria/gallery_img53.avif",
+    "/galeria/gallery_img54.avif",
+    "/galeria/gallery_img55.avif",
+    "/galeria/gallery_img56.avif",
+    "/galeria/gallery_img57.avif",
+    "/galeria/gallery_img58.avif",
+    "/galeria/gallery_img59.avif",
+    "/galeria/gallery_img60.avif",
+    "/galeria/gallery_img61.avif",
 ];
 ---
+
 <section class="max-w-7xl mx-auto px-4 py-24">
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 pswp-gallery" id="my-gallery">
-        {images.map((image, index) => (
-            <a href={image} rel="noreferrer" aria-label="Imagen de Hotel Chaska Valle Green" data-pswp-uid={index + 1} class="block rounded-md overflow-hidden"
-               class="shadow-sm" data-pswp-width="831"
-               data-pswp-height="552">
-                <div class="relative group cursor-pointer">
-                    <img loading={index > 5 ? 'lazy' : 'eager'} src={image} alt="Hotel Chaska Valle Green" 
-                         class="object-cover object-top w-full h-full rounded-md" width="831" height="552" />
-                    <p class="flex text-white backdrop-blur-sm bg-black/20 text-2xl absolute font-bold w-full gap-2 items-center top-0 h-full justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15" />
-                        </svg>
-                        Hotel Chaska Valle Green
-                    </p>
-                </div>
-            </a>
-        ))}
+    <div
+        class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 pswp-gallery"
+        id="my-gallery"
+    >
+        {
+            images.map((image, index) => (
+                <a
+                    href={image}
+                    rel="noreferrer"
+                    aria-label="Imagen de Hotel Chaska Valle Green"
+                    data-pswp-uid={index + 1}
+                    class="block rounded-md overflow-hidden"
+                    class="shadow-sm"
+                    data-pswp-width="831"
+                    data-pswp-height="552"
+                >
+                    <div class="relative group cursor-pointer">
+                        <img
+                            loading={index > 5 ? "lazy" : "eager"}
+                            src={image}
+                            alt="Hotel Chaska Valle Green"
+                            class="object-cover object-top w-full h-full rounded-md"
+                            width="831"
+                            height="552"
+                        />
+                        <p class="flex flex-col text-white backdrop-blur-sm bg-black/20 absolute font-bold w-full gap-0.5 items-center top-0 h-full justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500 text-center px-4 leading-tight">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke-width="1.5"
+                                stroke="currentColor"
+                                class="size-7 mb-1"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15"
+                                />
+                            </svg>
+                            <span class="text-lg block uppercase tracking-wider">Hotel</span>
+                            <span class="text-sm block opacity-90 font-medium">Chaska Valle Green</span>
+                        </p>
+                    </div>
+                </a>
+            ))
+        }
     </div>
 </section>
 
 <script>
-    import PhotoSwipeLightbox from 'photoswipe/lightbox';
+    import PhotoSwipeLightbox from "photoswipe/lightbox";
 
-    const lightbox = new PhotoSwipeLightbox({ gallery:   '#my-gallery', children: 'a', pswpModule: () => import('photoswipe')
+    const lightbox = new PhotoSwipeLightbox({
+        gallery: "#my-gallery",
+        children: "a",
+        pswpModule: () => import("photoswipe"),
     });
     lightbox.init();
 </script>
