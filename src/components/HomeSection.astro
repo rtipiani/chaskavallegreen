@@ -2,7 +2,7 @@
     <!-- Imagen activa -->
     <div
         id="slider"
-        class="absolute inset-0 bg-cover bg-center opacity-100 transition-opacity duration-1000 z-0 will-change-opacity"
+        class="absolute inset-0 bg-cover bg-center opacity-100 transition-opacity duration-1000 z-0 will-change-opacity bg-black"
         style="background-image: url('/slide1.avif');"
     >
     </div>
@@ -10,7 +10,7 @@
     <!-- Capa de imagen siguiente -->
     <div
         id="slider-next"
-        class="absolute inset-0 bg-cover bg-center transition-opacity duration-1000 opacity-0 z-0 will-change-opacity"
+        class="absolute inset-0 bg-cover bg-center transition-opacity duration-1000 opacity-0 z-0 will-change-opacity bg-black"
     >
     </div>
 
@@ -105,6 +105,12 @@
     let current: HTMLDivElement = slider;
     let next: HTMLDivElement = sliderNext;
 
+    // Precarga de imágenes para evitar el flash gris
+    images.forEach(src => {
+        const img = new Image();
+        img.src = src;
+    });
+
     function updateSlide() {
         next.style.backgroundImage = `url('${images[index]}')`;
 
@@ -144,9 +150,13 @@
         startInterval();
     }
 
-    // Iniciar slider
+    // Iniciar slider sin flash
     current.style.backgroundImage = `url('${images[index]}')`;
-    updateSlide();
+    
+    // Marcar el primer dot como activo
+    dots[0].classList.add("w-12", "bg-white");
+    dots[0].classList.remove("w-8", "bg-white/30");
+
     startInterval();
 
     container.addEventListener("mouseenter", () => clearInterval(interval));
