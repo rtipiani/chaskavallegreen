@@ -1,95 +1,60 @@
+---
+const images = [
+    "/slide1.avif",
+    "/slide2.avif",
+    "/slide3.avif",
+    "/slide4.avif",
+    "/slide5.avif",
+];
+---
 <div id="slider-container" class="relative h-screen overflow-hidden group">
-    <!-- Imagen activa -->
-    <div
-        id="slider"
-        class="absolute inset-0 bg-cover bg-center opacity-100 transition-opacity duration-1000 z-0 will-change-opacity bg-black"
-        style="background-image: url('/slide1.avif');"
-    >
-    </div>
+    <!-- Imagen 1 -->
+    <img
+        id="slide-1"
+        src={images[0]}
+        alt="Hotel Chaska Valle Green"
+        class="absolute inset-0 w-full h-full object-cover opacity-100 transition-opacity duration-1000 z-0 will-change-opacity"
+        fetchpriority="high"
+    />
 
-    <!-- Capa de imagen siguiente -->
-    <div
-        id="slider-next"
-        class="absolute inset-0 bg-cover bg-center transition-opacity duration-1000 opacity-0 z-0 will-change-opacity bg-black"
-    >
-    </div>
+    <!-- Imagen 2 (Capa de transición) -->
+    <img
+        id="slide-2"
+        src=""
+        alt="Hotel Chaska Valle Green"
+        class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-1000 z-0 will-change-opacity"
+    />
 
     <!-- Superposición oscura -->
-    <div class="absolute inset-0 bg-black/45"></div>
+    <div class="absolute inset-0 bg-black/45 z-10"></div>
 
     <!-- Contenido centrado -->
-    <div
-        class="relative z-10 flex flex-col items-center justify-center h-full text-white text-center"
-    >
+    <div class="relative z-20 flex flex-col items-center justify-center h-full text-white text-center">
         <h1 class="text-5xl font-bold">Chaska Valle Green</h1>
         <p class="text-lg tracking-wide">Vive Momentos de Turismo y Aventura</p>
         <div class="w-20 h-1 bg-yellow-600 mt-4"></div>
     </div>
 
     <!-- Dots -->
-    <div
-        class="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20 flex space-x-3"
-    >
-        <button
-            class="flex items-center justify-center group py-4"
-            aria-label="Ir al slide 0"
-            onclick="goToSlide(0)"
-        >
-            <div
-                class="slider-dot w-8 h-1 rounded-full bg-white/30 group-hover:bg-white/60 transition-all duration-500"
+    <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-30 flex space-x-3">
+        {images.map((_, i) => (
+            <button
+                class="flex items-center justify-center group py-4"
+                aria-label={`Ir al slide ${i}`}
+                onclick={`goToSlide(${i})`}
             >
-            </div>
-        </button>
-        <button
-            class="flex items-center justify-center group py-4"
-            aria-label="Ir al slide 1"
-            onclick="goToSlide(1)"
-        >
-            <div
-                class="slider-dot w-8 h-1 rounded-full bg-white/30 group-hover:bg-white/60 transition-all duration-500"
-            >
-            </div>
-        </button>
-        <button
-            class="flex items-center justify-center group py-4"
-            aria-label="Ir al slide 2"
-            onclick="goToSlide(2)"
-        >
-            <div
-                class="slider-dot w-8 h-1 rounded-full bg-white/30 group-hover:bg-white/60 transition-all duration-500"
-            >
-            </div>
-        </button>
-        <button
-            class="flex items-center justify-center group py-4"
-            aria-label="Ir al slide 3"
-            onclick="goToSlide(3)"
-        >
-            <div
-                class="slider-dot w-8 h-1 rounded-full bg-white/30 group-hover:bg-white/60 transition-all duration-500"
-            >
-            </div>
-        </button>
-        <button
-            class="flex items-center justify-center group py-4"
-            aria-label="Ir al slide 4"
-            onclick="goToSlide(4)"
-        >
-            <div
-                class="slider-dot w-8 h-1 rounded-full bg-white/30 group-hover:bg-white/60 transition-all duration-500"
-            >
-            </div>
-        </button>
+                <div class="slider-dot w-8 h-1 rounded-full bg-white/30 group-hover:bg-white/60 transition-all duration-500"></div>
+            </button>
+        ))}
     </div>
 </div>
 
 <script>
-    const slider = document.getElementById("slider") as HTMLDivElement;
-    const sliderNext = document.getElementById("slider-next") as HTMLDivElement;
-    const container = document.getElementById(
-        "slider-container",
-    ) as HTMLDivElement;
+    const img1 = document.getElementById("slide-1") as HTMLImageElement;
+    const img2 = document.getElementById("slide-2") as HTMLImageElement;
+    const container = document.getElementById("slider-container") as HTMLDivElement;
     const dots = document.querySelectorAll(".slider-dot");
+    
     const images = [
         "/slide1.avif",
         "/slide2.avif",
@@ -100,49 +65,56 @@
 
     let index = 0;
     let interval: number;
+    let isTransitioning = false;
+    
+    let activeImg = img1;
+    let inactiveImg = img2;
 
-    // Tipado explícito: HTMLDivElement
-    let current: HTMLDivElement = slider;
-    let next: HTMLDivElement = sliderNext;
+    function updateSlide(newIndex: number) {
+        if (isTransitioning || newIndex === index && activeImg.src.includes(images[newIndex])) return;
+        
+        isTransitioning = true;
+        const nextSrc = images[newIndex];
+        
+        // 1. Cargar la imagen en la capa inactiva (que está en opacity-0)
+        inactiveImg.src = nextSrc;
+        
+        // 2. ESPERAR a que la imagen esté cargada antes de mostrarla
+        inactiveImg.onload = () => {
+            // Solo cuando está lista, hacemos el cross-fade
+            inactiveImg.classList.replace("opacity-0", "opacity-100");
+            activeImg.classList.replace("opacity-100", "opacity-0");
+            
+            // Actualizar dots
+            index = newIndex;
+            dots.forEach((dot, i) => {
+                dot.classList.toggle("w-12", i === index);
+                dot.classList.toggle("bg-white", i === index);
+                dot.classList.toggle("w-8", i !== index);
+                dot.classList.toggle("bg-white/30", i !== index);
+            });
 
-    // Precarga de imágenes para evitar el flash gris
-    images.forEach(src => {
-        const img = new Image();
-        img.src = src;
-    });
-
-    function updateSlide() {
-        next.style.backgroundImage = `url('${images[index]}')`;
-
-        next.classList.add("opacity-100");
-        current.classList.remove("opacity-100");
-        current.classList.add("opacity-0");
-
-        // Intercambiar referencias
-        [current, next] = [next, current];
-
-        dots.forEach((dot, i) => {
-            dot.classList.toggle("w-12", i === index);
-            dot.classList.toggle("bg-white", i === index);
-            dot.classList.toggle("w-8", i !== index);
-            dot.classList.toggle("bg-white/30", i !== index);
-        });
+            // Intercambiar roles
+            [activeImg, inactiveImg] = [inactiveImg, activeImg];
+            
+            setTimeout(() => {
+                isTransitioning = false;
+            }, 1000); // Duración de la transición
+        };
     }
 
     function nextSlide() {
-        index = (index + 1) % images.length;
-        updateSlide();
+        const nextIndex = (index + 1) % images.length;
+        updateSlide(nextIndex);
     }
 
-    // Lo exponemos a window para que funcione con onclick
     (window as any).goToSlide = function (i: number) {
-        index = i;
-        updateSlide();
+        updateSlide(i);
         resetInterval();
     };
 
     function startInterval() {
-        interval = window.setInterval(nextSlide, 3000);
+        interval = window.setInterval(nextSlide, 5000); // 5 segundos para que de tiempo a apreciar la imagen
     }
 
     function resetInterval() {
@@ -150,13 +122,10 @@
         startInterval();
     }
 
-    // Iniciar slider sin flash
-    current.style.backgroundImage = `url('${images[index]}')`;
-    
-    // Marcar el primer dot como activo
+    // Inicializar primer dot
     dots[0].classList.add("w-12", "bg-white");
     dots[0].classList.remove("w-8", "bg-white/30");
-
+    
     startInterval();
 
     container.addEventListener("mouseenter", () => clearInterval(interval));
