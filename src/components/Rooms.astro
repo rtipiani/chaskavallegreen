@@ -1,7 +1,4 @@
 ---
-import fs from 'node:fs';
-import path from 'node:path';
-
 import sql from '../lib/db';
 
 const numeroWhatsapp = "51957708697";
@@ -19,19 +16,20 @@ const habitacionesBasicas = await sql<Habitacion[]>`
     ORDER BY orden ASC
 `;
 
+// Buscamos todas las imágenes de forma compatible con Vercel
+const allImages = import.meta.glob('/public/habitaciones/**/*.{jpg,jpeg,png,webp,avif}', { eager: true });
+const imagePaths = Object.keys(allImages);
+
 const habitaciones = habitacionesBasicas.map(h => {
-    const dirPath = path.join(process.cwd(), 'public', 'habitaciones', h.folder);
-    let imagenes: string[] = [];
-    try {
-        if (fs.existsSync(dirPath)) {
-            imagenes = fs.readdirSync(dirPath)
-                .filter(file => /\.(avif|webp|png|jpg|jpeg)$/i.test(file))
-                .map(file => `/habitaciones/${h.folder}/${file}`);
-        }
-    } catch (error) {
-        console.error(`Error leyendo la carpeta de ${h.nombre}:`, error);
-    }
-    return { ...h, imagenes };
+    const folderPattern = `/public/habitaciones/${h.folder}/`;
+    const imagenes = imagePaths
+        .filter(path => path.startsWith(folderPattern))
+        .map(path => path.replace('/public', ''));
+
+    return { 
+        ...h, 
+        imagenes: imagenes.length > 0 ? imagenes : ["/habitaciones/placeholder.jpg"] 
+    };
 });
 ---
 <section class="py-16 bg-gray-100">

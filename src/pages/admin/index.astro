@@ -20,20 +20,16 @@ interface Habitacion {
 
 const habitacionesBasicas = await sql<Habitacion[]>`SELECT * FROM habitaciones ORDER BY orden ASC`;
 
-// Lógica dinámica para encontrar imágenes
+// Buscamos todas las imágenes en la carpeta public al momento de compilar/ejecutar
+const allImages = import.meta.glob('/public/habitaciones/**/*.{jpg,jpeg,png,webp,avif}', { eager: true });
+const imagePaths = Object.keys(allImages);
+
 const habitaciones = habitacionesBasicas.map(h => {
-    const dirPath = path.join(process.cwd(), 'public', 'habitaciones', h.folder);
-    let imagenes: string[] = [];
-    try {
-        if (fs.existsSync(dirPath)) {
-            imagenes = fs.readdirSync(dirPath)
-                .filter(file => /\.(jpg|jpeg|png|webp|avif)$/i.test(file))
-                .sort()
-                .map(file => `/habitaciones/${h.folder}/${file}`);
-        }
-    } catch (e) {
-        console.error("Error leyendo carpeta:", dirPath);
-    }
+    // Filtramos las imágenes que pertenecen a esta habitación
+    const folderPattern = `/public/habitaciones/${h.folder}/`;
+    const imagenes = imagePaths
+        .filter(path => path.startsWith(folderPattern))
+        .map(path => path.replace('/public', '')); // Convertimos a ruta web
     
     return { 
         ...h, 
