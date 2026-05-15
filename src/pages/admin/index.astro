@@ -14,7 +14,7 @@ const habitacionesBasicas = await sql`SELECT * FROM habitaciones ORDER BY orden 
 // Lógica dinámica para encontrar imágenes
 const habitaciones = habitacionesBasicas.map(h => {
     const dirPath = path.join(process.cwd(), 'public', 'habitaciones', h.folder);
-    let imagenes = [];
+    let imagenes: string[] = [];
     try {
         if (fs.existsSync(dirPath)) {
             imagenes = fs.readdirSync(dirPath)
