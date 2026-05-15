@@ -17,9 +17,20 @@ const habitacionesBasicas = (await sql`
     ORDER BY orden ASC
 `) as Habitacion[];
 
+// Función que determina la ruta de la primera imagen según el patrón de nombre de cada carpeta
+function getPrimerImagen(folder: string): string {
+    // Carpetas con imágenes nombradas "habitacion-{folder}-1.avif"
+    const conPrefijo = ['doble', 'matrimonial', 'matrimonial-queen'];
+    if (conPrefijo.includes(folder)) {
+        return `/habitaciones/${folder}/habitacion-${folder}-1.avif`;
+    }
+    // Carpetas con imágenes nombradas "1.avif"
+    return `/habitaciones/${folder}/1.avif`;
+}
+
 const habitaciones = habitacionesBasicas.map(h => ({
     ...h,
-    imagenes: [`/habitaciones/${h.folder}/1.avif`]
+    imagenes: [getPrimerImagen(h.folder)]
 }));
 ---
 <section class="py-16 bg-gray-100">
