@@ -67,9 +67,11 @@ try {
                 <a href="/" target="_blank" class="text-sm text-gray-500 hover:text-gray-800 transition-colors flex items-center gap-2">
                     Ver Sitio Web <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
                 </a>
-                <button id="logoutBtn" class="bg-red-50 text-red-600 px-4 py-2 rounded-full text-sm font-bold hover:bg-red-100 transition-all flex items-center gap-2 border border-red-100">
-                    <i class="fa-solid fa-right-from-bracket"></i> Cerrar Sesión
-                </button>
+                <form action="/api/auth/logout" method="POST">
+                    <button type="submit" class="bg-red-50 text-red-600 px-4 py-2 rounded-full text-sm font-bold hover:bg-red-100 transition-all flex items-center gap-2 border border-red-100">
+                        <i class="fa-solid fa-right-from-bracket"></i> Cerrar Sesión
+                    </button>
+                </form>
             </div>
         </nav>
 
@@ -164,11 +166,6 @@ try {
 </Layout>
 
 <script>
-    document.getElementById('logoutBtn')?.addEventListener('click', async () => {
-        await fetch('/api/auth/logout', { method: 'POST' });
-        window.location.href = '/admin/login';
-    });
-
     const modal = document.getElementById('editModal') as HTMLDivElement;
     const editForm = document.getElementById('editForm') as HTMLFormElement;
     const closeModal = document.getElementById('closeModal');
