@@ -155,6 +155,12 @@ try {
             </form>
         </div>
     </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed bottom-6 right-6 z-[9999] flex items-center gap-3 px-6 py-4 rounded-2xl shadow-2xl text-white font-bold text-sm translate-y-20 opacity-0 transition-all duration-500 pointer-events-none">
+        <i id="toastIcon" class="fa-solid fa-circle-check text-lg"></i>
+        <span id="toastMsg">Cambios guardados correctamente</span>
+    </div>
 </Layout>
 
 <script>
@@ -184,8 +190,37 @@ try {
 
     closeModal?.addEventListener('click', () => modal.classList.add('hidden'));
 
+    // Toast helper
+    function showToast(message: string, isError = false) {
+        const toast = document.getElementById('toast') as HTMLDivElement;
+        const toastMsg = document.getElementById('toastMsg') as HTMLSpanElement;
+        const toastIcon = document.getElementById('toastIcon') as HTMLElement;
+
+        toastMsg.textContent = message;
+        toast.className = `fixed bottom-6 right-6 z-[9999] flex items-center gap-3 px-6 py-4 rounded-2xl shadow-2xl text-white font-bold text-sm transition-all duration-500 ${
+            isError ? 'bg-red-500' : 'bg-green-600'
+        }`;
+        toastIcon.className = `fa-solid ${ isError ? 'fa-circle-xmark' : 'fa-circle-check' } text-lg`;
+
+        // Animate in
+        requestAnimationFrame(() => {
+            toast.style.transform = 'translateY(0)';
+            toast.style.opacity = '1';
+        });
+
+        // Animate out after 3s
+        setTimeout(() => {
+            toast.style.transform = 'translateY(5rem)';
+            toast.style.opacity = '0';
+        }, 3000);
+    }
+
     editForm?.addEventListener('submit', async (e) => {
         e.preventDefault();
+        const submitBtn = editForm.querySelector('[type="submit"]') as HTMLButtonElement;
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Guardando...';
+
         const data = Object.fromEntries(new FormData(editForm).entries());
         try {
             const response = await fetch('/api/rooms/update', {
@@ -194,12 +229,18 @@ try {
                 body: JSON.stringify(data)
             });
             if (response.ok) {
-                window.location.reload();
+                modal.classList.add('hidden');
+                showToast('¡Cambios guardados correctamente!');
+                setTimeout(() => window.location.reload(), 1500);
             } else {
-                alert('Error al actualizar');
+                showToast('Error al actualizar. Inténtalo de nuevo.', true);
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Guardar Cambios';
             }
         } catch (err) {
-            alert('Error inesperado');
+            showToast('Error de conexión inesperado.', true);
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Guardar Cambios';
         }
     });
 </script>
