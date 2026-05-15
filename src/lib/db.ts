@@ -1,10 +1,11 @@
-import postgres from 'postgres';
+import { neon } from '@neondatabase/serverless';
 
 const connectionString = process.env.DATABASE_URL;
 
-const sql = postgres(connectionString || '', {
-    ssl: 'require',
-    max: 1,
-});
+if (!connectionString) {
+    console.error("DATABASE_URL is not defined");
+}
+
+const sql = neon(connectionString || '');
 
 export default sql;

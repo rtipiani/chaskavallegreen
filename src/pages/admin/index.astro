@@ -1,8 +1,6 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import sql from '../../lib/db';
-import fs from 'node:fs';
-import path from 'node:path';
 
 const session = Astro.cookies.get('admin_session');
 if (!session || session.value !== 'authenticated') {
