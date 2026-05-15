@@ -1,8 +1,7 @@
 import type { APIRoute } from 'astro';
-import sql from '../../../lib/db';
+import { getDb } from '../../../lib/db';
 
 export const POST: APIRoute = async ({ request, cookies }) => {
-    // Basic session check
     const session = cookies.get('admin_session');
     if (!session || session.value !== 'authenticated') {
         return new Response(JSON.stringify({ success: false, message: 'No autorizado' }), { status: 401 });
@@ -16,6 +15,7 @@ export const POST: APIRoute = async ({ request, cookies }) => {
             return new Response(JSON.stringify({ success: false, message: 'ID faltante' }), { status: 400 });
         }
 
+        const sql = getDb();
         await sql`
             UPDATE habitaciones 
             SET nombre = ${nombre}, precio = ${precio}, descripcion = ${descripcion}
