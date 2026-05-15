@@ -1,13 +1,35 @@
----
 import Layout from '../../layouts/Layout.astro';
 import sql from '../../lib/db';
+import fs from 'node:fs';
+import path from 'node:path';
 
 const session = Astro.cookies.get('admin_session');
 if (!session || session.value !== 'authenticated') {
     return Astro.redirect('/admin/login');
 }
 
-const habitaciones = await sql`SELECT * FROM habitaciones ORDER BY orden ASC`;
+const habitacionesBasicas = await sql`SELECT * FROM habitaciones ORDER BY orden ASC`;
+
+// Lógica dinámica para encontrar imágenes
+const habitaciones = habitacionesBasicas.map(h => {
+    const dirPath = path.join(process.cwd(), 'public', 'habitaciones', h.folder);
+    let imagenes = [];
+    try {
+        if (fs.existsSync(dirPath)) {
+            imagenes = fs.readdirSync(dirPath)
+                .filter(file => /\.(jpg|jpeg|png|webp|avif)$/i.test(file))
+                .sort()
+                .map(file => `/habitaciones/${h.folder}/${file}`);
+        }
+    } catch (e) {
+        console.error("Error leyendo carpeta:", dirPath);
+    }
+    
+    return { 
+        ...h, 
+        mainImage: imagenes.length > 0 ? imagenes[0] : 'https://placehold.co/400x300?text=Subir+Imagen'
+    };
+});
 ---
 
 <Layout title="Dashboard | Chaska Valle Green">
@@ -50,10 +72,9 @@ const habitaciones = await sql`SELECT * FROM habitaciones ORDER BY orden ASC`;
                     <div class="bg-white rounded-2xl shadow-sm border border-gray-100 hover:shadow-xl hover:border-yellow-100 transition-all duration-300 overflow-hidden flex flex-col md:flex-row group">
                         <div class="md:w-64 bg-gray-50 flex items-center justify-center border-r border-gray-50 overflow-hidden shrink-0">
                             <img 
-                                src={`/habitaciones/${habitacion.folder}/1.avif`} 
+                                src={habitacion.mainImage} 
                                 alt={habitacion.nombre}
                                 class="w-full h-64 md:h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                                onerror="this.src='https://placehold.co/400x300?text=Sin+Imagen'"
                             />
                         </div>
                         <div class="flex-grow p-8 flex flex-col justify-between">
