@@ -1,12 +1,13 @@
 import type { APIRoute } from 'astro';
+import 'dotenv/config';
 
 export const POST: APIRoute = async ({ request, cookies }) => {
     try {
         const data = await request.json();
         const { email, password } = data;
 
-        const adminEmail = import.meta.env.ADMIN_EMAIL;
-        const adminPassword = import.meta.env.ADMIN_PASSWORD;
+        const adminEmail = process.env.ADMIN_EMAIL || import.meta.env.ADMIN_EMAIL;
+        const adminPassword = process.env.ADMIN_PASSWORD || import.meta.env.ADMIN_PASSWORD;
 
         if (email === adminEmail && password === adminPassword) {
             // Set a secure cookie for 1 day

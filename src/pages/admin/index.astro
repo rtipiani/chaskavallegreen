@@ -9,7 +9,16 @@ if (!session || session.value !== 'authenticated') {
     return Astro.redirect('/admin/login');
 }
 
-const habitacionesBasicas = await sql`SELECT * FROM habitaciones ORDER BY orden ASC`;
+interface Habitacion {
+    id: string;
+    nombre: string;
+    folder: string;
+    descripcion: string;
+    precio: string;
+    orden: number;
+}
+
+const habitacionesBasicas = await sql<Habitacion[]>`SELECT * FROM habitaciones ORDER BY orden ASC`;
 
 // Lógica dinámica para encontrar imágenes
 const habitaciones = habitacionesBasicas.map(h => {
@@ -154,14 +163,14 @@ const habitaciones = habitacionesBasicas.map(h => {
     });
 
     // Modal logic
-    const modal = document.getElementById('editModal');
-    const editForm = document.getElementById('editForm');
+    const modal = document.getElementById('editModal') as HTMLDivElement;
+    const editForm = document.getElementById('editForm') as HTMLFormElement;
     const closeModal = document.getElementById('closeModal');
     
-    const roomIdInput = document.getElementById('roomId');
-    const roomNombreInput = document.getElementById('roomNombre');
-    const roomPrecioInput = document.getElementById('roomPrecio');
-    const roomDescInput = document.getElementById('roomDesc');
+    const roomIdInput = document.getElementById('roomId') as HTMLInputElement;
+    const roomNombreInput = document.getElementById('roomNombre') as HTMLInputElement;
+    const roomPrecioInput = document.getElementById('roomPrecio') as HTMLInputElement;
+    const roomDescInput = document.getElementById('roomDesc') as HTMLTextAreaElement;
 
     document.querySelectorAll('.edit-btn').forEach(btn => {
         btn.addEventListener('click', () => {
