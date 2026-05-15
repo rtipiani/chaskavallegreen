@@ -1,6 +1,6 @@
 ---
 import sql from '../lib/db';
-const habitacionesDb = await sql`SELECT id, nombre FROM habitaciones ORDER BY orden ASC`;
+const habitacionesDb = (await sql`SELECT id, nombre FROM habitaciones ORDER BY orden ASC`) as {id: string, nombre: string}[];
 ---
 
 <style>
