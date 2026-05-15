@@ -1,3 +1,36 @@
+---
+import sql from '../lib/db';
+const habitacionesDb = await sql`SELECT id, nombre FROM habitaciones ORDER BY orden ASC`;
+---
+
+<style>
+    /* Estilos para manejar el placeholder en inputs de tipo date */
+    input[type="date"]:not(:focus):not(:valid) {
+        color: transparent;
+    }
+    
+    input[type="date"]:not(:focus):not(:valid)::before {
+        content: attr(placeholder);
+        color: #9ca3af; /* text-gray-400 */
+        position: absolute;
+        pointer-events: none;
+    }
+
+    /* Asegurar que el selector de fecha se active en todo el campo en móviles */
+    input[type="date"]::-webkit-calendar-picker-indicator {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: auto;
+        height: auto;
+        color: transparent;
+        background: transparent;
+        cursor: pointer;
+    }
+</style>
+
 <section class="max-w-5xl w-full py-12 p-8 mx-auto mt-5 mb-12">
     <h2 class="text-2xl font-bold text-gray-900 mb-2 text-center md:text-left">
         Haz tu reserva rápida y segura.
@@ -30,13 +63,12 @@
                 Fecha de Ingreso
             </label>
             <input 
-                type="text" 
+                type="date" 
                 id="fechaIngreso" 
                 name="fechaIngreso" 
+                required
                 placeholder="Selecciona fecha de ingreso"
-                onfocus="(this.type='date')"
-                onblur="if(!this.value)this.type='text'"
-                class="w-full px-4 py-2 focus:outline focus:outline-yellow-600 rounded-md bg-gray-50 text-gray-700 appearance-none min-h-[44px]"
+                class="w-full px-4 py-2 focus:outline focus:outline-yellow-600 rounded-md bg-gray-50 text-gray-700 appearance-none min-h-[44px] relative"
             >
         </div>
 
@@ -45,13 +77,12 @@
                 Fecha de Salida
             </label>
             <input 
-                type="text" 
+                type="date" 
                 id="fechaSalida" 
                 name="fechaSalida" 
+                required
                 placeholder="Selecciona fecha de salida"
-                onfocus="(this.type='date')"
-                onblur="if(!this.value)this.type='text'"
-                class="w-full px-4 py-2 focus:outline focus:outline-yellow-600 rounded-md bg-gray-50 text-gray-700 appearance-none min-h-[44px]"
+                class="w-full px-4 py-2 focus:outline focus:outline-yellow-600 rounded-md bg-gray-50 text-gray-700 appearance-none min-h-[44px] relative"
             >
         </div>
 
@@ -64,22 +95,15 @@
     </form>
 </section>
 
-<script>
+<script define:vars={{ initialHabitaciones: habitacionesDb }}>
     document.addEventListener("DOMContentLoaded", function () {
-        const habitaciones = [
-            { id: "1", nombre: "Simple" },
-            { id: "2", nombre: "Doble" },
-            { id: "3", nombre: "Matrimonial" },
-            { id: "4", nombre: "Matrimonial Queen" },
-            { id: "5", nombre: "Triple" },
-            { id: "6", nombre: "Familiar" }
-        ];
+        const habitaciones = initialHabitaciones;
 
-        const habitacionSelect = document.getElementById("programaSelect") as HTMLSelectElement | null;
-        const nombreInput = document.getElementById("nombres") as HTMLInputElement | null;
-        const fechaIngreso = document.getElementById("fechaIngreso") as HTMLInputElement | null;
-        const fechaSalida = document.getElementById("fechaSalida") as HTMLInputElement | null;
-        const consultarBtn = document.getElementById("consultarBtn") as HTMLButtonElement | null;
+        const habitacionSelect = document.getElementById("programaSelect");
+        const nombreInput = document.getElementById("nombres");
+        const fechaIngreso = document.getElementById("fechaIngreso");
+        const fechaSalida = document.getElementById("fechaSalida");
+        const consultarBtn = document.getElementById("consultarBtn");
 
         if (!habitacionSelect || !nombreInput || !fechaIngreso || !fechaSalida || !consultarBtn) {
             console.error("Error: No se encontraron los elementos del formulario.");
@@ -93,19 +117,20 @@
             habitacionSelect.appendChild(option);
         });
 
-        function formatoFecha(fechaStr: string) {
+        function formatoFecha(fechaStr) {
             if (!fechaStr) return "";
 
             const meses = [
                 "enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"
             ];
 
-            const nuevaFecha = new Date(fechaStr);
-            if (isNaN(nuevaFecha.getTime())) return "";
-
-            const dia = nuevaFecha.getDate();
-            const mes = meses[nuevaFecha.getMonth()];
-            const año = nuevaFecha.getFullYear();
+            // Usamos split para evitar problemas de zona horaria con el constructor Date
+            const partes = fechaStr.split("-");
+            if (partes.length !== 3) return "";
+            
+            const año = parseInt(partes[0]);
+            const mes = meses[parseInt(partes[1]) - 1];
+            const dia = parseInt(partes[2]);
 
             return `${dia} de ${mes} de ${año}`;
         }

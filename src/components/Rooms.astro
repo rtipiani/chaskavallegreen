@@ -2,46 +2,22 @@
 import fs from 'node:fs';
 import path from 'node:path';
 
+import sql from '../lib/db';
+
 const numeroWhatsapp = "51957708697";
 
-const habitacionesBasicas = [
-    {
-        nombre: "Habitación simple",
-        folder: "simple",
-        descripcion: "Una habitación espaciosa con vista panorámica.",
-        precio: "S/ 110 - noche"
-    },
-    {
-        nombre: "Habitación Matrimonial Queen",
-        folder: "matrimonial-queen",
-        descripcion: "Elegancia y comodidad con servicios exclusivos.",
-        precio: "S/ 155 - noche"
-    },
-    {
-        nombre: "Habitación Matrimonial",
-        folder: "matrimonial",
-        descripcion: "Elegancia y comodidad con servicios exclusivos.",
-        precio: "S/ 140 - noche"
-    },
-    {
-        nombre: "Habitación Doble",
-        folder: "doble",
-        descripcion: "Ideal para compartir en un ambiente acogedor.",
-        precio: "S/ 145 - noche"
-    },
-    {
-        nombre: "Habitación Familiar",
-        folder: "familiar",
-        descripcion: "Perfecto para el descanso y la comodidad de todos.",
-        precio: "S/ 160 - noche"
-    },
-    {
-        nombre: "Habitación Triple",
-        folder: "triple",
-        descripcion: "Ideal para una estadía placentera y el buen descanso de todos.",
-        precio: "S/ 195 - noche"
-    }
-];
+interface Habitacion {
+    nombre: string;
+    folder: string;
+    descripcion: string;
+    precio: string;
+}
+
+const habitacionesBasicas = await sql<Habitacion[]>`
+    SELECT nombre, folder, descripcion, precio 
+    FROM habitaciones 
+    ORDER BY orden ASC
+`;
 
 const habitaciones = habitacionesBasicas.map(h => {
     const dirPath = path.join(process.cwd(), 'public', 'habitaciones', h.folder);

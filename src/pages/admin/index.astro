@@ -1,0 +1,135 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import sql from '../../lib/db';
+
+const session = Astro.cookies.get('admin_session');
+if (!session || session.value !== 'authenticated') {
+    return Astro.redirect('/admin/login');
+}
+
+const habitaciones = await sql`SELECT * FROM habitaciones ORDER BY orden ASC`;
+---
+
+<Layout title="Dashboard | Chaska Valle Green">
+    <div class="min-h-screen bg-gray-50">
+        <nav class="bg-white shadow-sm px-6 py-4 flex justify-between items-center">
+            <h1 class="text-xl font-bold text-gray-800">Administración - Chaska Valle Green</h1>
+            <button id="logoutBtn" class="text-sm font-medium text-red-600 hover:text-red-800 transition-colors">
+                Cerrar Sesión
+            </button>
+        </nav>
+
+        <main class="max-w-6xl mx-auto py-10 px-4">
+            <header class="mb-8">
+                <h2 class="text-3xl font-semibold text-gray-900">Gestionar Habitaciones</h2>
+                <p class="text-gray-600">Modifica los precios y descripciones que aparecen en la web.</p>
+            </header>
+
+            <div class="grid gap-6">
+                {habitaciones.map((habitacion) => (
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 flex flex-col md:flex-row md:items-center gap-6">
+                        <div class="flex-grow">
+                            <h3 class="text-lg font-bold text-gray-800">{habitacion.nombre}</h3>
+                            <p class="text-sm text-gray-500 mt-1">{habitacion.descripcion}</p>
+                            <div class="mt-4 inline-block bg-yellow-50 text-yellow-800 px-3 py-1 rounded-full text-sm font-bold">
+                                {habitacion.precio}
+                            </div>
+                        </div>
+                        <div class="flex gap-3">
+                            <button 
+                                class="edit-btn px-4 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-700 transition-colors"
+                                data-room={JSON.stringify(habitacion)}
+                            >
+                                Editar
+                            </button>
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal de Edición -->
+    <div id="editModal" class="fixed inset-0 bg-black/50 hidden z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl w-full max-w-lg shadow-2xl p-8 transform transition-all">
+            <h2 class="text-2xl font-bold mb-6">Editar Habitación</h2>
+            <form id="editForm" class="space-y-4">
+                <input type="hidden" id="roomId" name="id">
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Nombre</label>
+                    <input type="text" id="roomNombre" name="nombre" class="w-full mt-1 px-4 py-2 border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-yellow-600">
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Precio</label>
+                    <input type="text" id="roomPrecio" name="precio" class="w-full mt-1 px-4 py-2 border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-yellow-600" placeholder="S/ 00 - noche">
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Descripción</label>
+                    <textarea id="roomDesc" name="descripcion" rows="3" class="w-full mt-1 px-4 py-2 border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-yellow-600"></textarea>
+                </div>
+
+                <div class="flex justify-end gap-3 mt-8">
+                    <button type="button" id="closeModal" class="px-5 py-2 text-gray-600 hover:bg-gray-100 rounded-lg">Cancelar</button>
+                    <button type="submit" class="px-5 py-2 bg-yellow-800 text-white font-semibold rounded-lg hover:bg-yellow-700 transition-colors">Guardar Cambios</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</Layout>
+
+<script>
+    // Logout
+    document.getElementById('logoutBtn')?.addEventListener('click', () => {
+        document.cookie = "admin_session=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        window.location.href = '/admin/login';
+    });
+
+    // Modal logic
+    const modal = document.getElementById('editModal') as HTMLDivElement;
+    const editForm = document.getElementById('editForm') as HTMLFormElement;
+    const closeModal = document.getElementById('closeModal');
+    
+    const roomIdInput = document.getElementById('roomId') as HTMLInputElement;
+    const roomNombreInput = document.getElementById('roomNombre') as HTMLInputElement;
+    const roomPrecioInput = document.getElementById('roomPrecio') as HTMLInputElement;
+    const roomDescInput = document.getElementById('roomDesc') as HTMLTextAreaElement;
+
+    document.querySelectorAll('.edit-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const data = JSON.parse(btn.getAttribute('data-room') || '{}');
+            roomIdInput.value = data.id;
+            roomNombreInput.value = data.nombre;
+            roomPrecioInput.value = data.precio;
+            roomDescInput.value = data.descripcion;
+            modal.classList.remove('hidden');
+        });
+    });
+
+    closeModal?.addEventListener('click', () => modal.classList.add('hidden'));
+
+    editForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const formData = new FormData(editForm);
+        const data = Object.fromEntries(formData.entries());
+
+        try {
+            const response = await fetch('/api/rooms/update', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
+
+            if (response.ok) {
+                window.location.reload();
+            } else {
+                alert('Error al actualizar');
+            }
+        } catch (error) {
+            console.error(error);
+            alert('Error inesperado');
+        }
+    });
+</script>
