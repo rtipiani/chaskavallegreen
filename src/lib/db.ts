@@ -1,11 +1,14 @@
 import { neon } from '@neondatabase/serverless';
 
-const connectionString = process.env.DATABASE_URL;
+const sql = async (strings: any, ...values: any[]) => {
+    const connectionString = process.env.DATABASE_URL;
+    
+    if (!connectionString) {
+        throw new Error("La variable DATABASE_URL no está configurada en Vercel.");
+    }
 
-if (!connectionString) {
-    console.error("DATABASE_URL is not defined");
-}
-
-const sql = neon(connectionString || '');
+    const query = neon(connectionString);
+    return query(strings, ...values);
+};
 
 export default sql;

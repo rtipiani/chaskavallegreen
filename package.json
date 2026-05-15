@@ -17,12 +17,14 @@
     "astro": "^6.3.3",
     "dotenv": "^17.4.2",
     "photoswipe": "^5.4.4",
-    "postgres": "^3.4.9",
     "sharp": "^0.34.5",
     "swiper": "^12.1.4",
     "tailwindcss": "^4.0.9"
   },
   "overrides": {
     "vite": "^6.0.0"
+  },
+  "engines": {
+    "node": ">=20.0.0"
   }
 }
