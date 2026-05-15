@@ -23,12 +23,20 @@ interface HabitacionConImagen extends Habitacion {
 let habitaciones: HabitacionConImagen[] = [];
 let error: string | null = null;
 
+function getPrimerImagen(folder: string): string {
+    const conPrefijo = ['doble', 'matrimonial', 'matrimonial-queen'];
+    if (conPrefijo.includes(folder)) {
+        return `/habitaciones/${folder}/habitacion-${folder}-1.avif`;
+    }
+    return `/habitaciones/${folder}/1.avif`;
+}
+
 try {
     const sql = getDb();
     const result = await sql`SELECT * FROM habitaciones ORDER BY orden ASC`;
     habitaciones = (result as Habitacion[]).map(h => ({
         ...h,
-        mainImage: `/habitaciones/${h.folder}/1.avif`
+        mainImage: getPrimerImagen(h.folder)
     }));
 } catch (e: any) {
     error = e.message;
