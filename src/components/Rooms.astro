@@ -16,21 +16,10 @@ const habitacionesBasicas = (await sql`
     ORDER BY orden ASC
 `) as Habitacion[];
 
-// Buscamos todas las imágenes de forma compatible con Vercel
-const allImages = import.meta.glob('/public/habitaciones/**/*.{jpg,jpeg,png,webp,avif}', { eager: true });
-const imagePaths = Object.keys(allImages);
-
-const habitaciones = habitacionesBasicas.map(h => {
-    const folderPattern = `/public/habitaciones/${h.folder}/`;
-    const imagenes = imagePaths
-        .filter(path => path.startsWith(folderPattern))
-        .map(path => path.replace('/public', ''));
-
-    return { 
-        ...h, 
-        imagenes: imagenes.length > 0 ? imagenes : ["/habitaciones/placeholder.jpg"] 
-    };
-});
+const habitaciones = habitacionesBasicas.map(h => ({
+    ...h,
+    imagenes: [`/habitaciones/${h.folder}/1.avif`]
+}));
 ---
 <section class="py-16 bg-gray-100">
     <div class="max-w-6xl mx-auto text-center mt-12 px-4">
