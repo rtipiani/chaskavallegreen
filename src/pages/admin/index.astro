@@ -53,22 +53,26 @@ try {
     )}
 
     <div class="min-h-screen bg-[#FDFCFB]">
-        <nav class="bg-white border-b border-gray-100 px-8 py-5 flex justify-between items-center sticky top-0 z-40 shadow-sm">
-            <div class="flex items-center gap-3">
-                <div class="w-10 h-10 bg-yellow-800 rounded-lg flex items-center justify-center text-white shadow-md">
-                    <i class="fa-solid fa-hotel text-lg"></i>
+        <nav class="bg-white border-b border-gray-100 px-4 md:px-8 py-4 md:py-5 flex justify-between items-center sticky top-0 z-40 shadow-sm">
+            <div class="flex items-center gap-2 md:gap-3">
+                <div class="w-8 h-8 md:w-10 md:h-10 bg-yellow-800 rounded-lg flex items-center justify-center text-white shadow-md shrink-0">
+                    <i class="fa-solid fa-hotel text-sm md:text-lg"></i>
                 </div>
-                <div>
-                    <h1 class="text-lg font-bold text-gray-900 leading-none">Chaska Valle Green</h1>
-                    <span class="text-xs text-yellow-800 font-semibold tracking-widest uppercase">Panel de Control</span>
+                <div class="min-w-0">
+                    <h1 class="text-sm md:text-lg font-bold text-gray-900 leading-none truncate">Chaska Valle Green</h1>
+                    <span class="text-[10px] md:text-xs text-yellow-800 font-semibold tracking-widest uppercase block mt-0.5">Panel de Control</span>
                 </div>
             </div>
-            <div class="flex items-center gap-6">
-                <a href="/" target="_blank" class="text-sm text-gray-500 hover:text-gray-800 transition-colors flex items-center gap-2">
-                    Ver Sitio Web <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+
+            <div class="flex items-center gap-3 md:gap-6">
+                <a href="/" target="_blank" class="text-xs md:text-sm text-gray-500 hover:text-gray-800 transition-colors flex items-center gap-1.5 font-medium">
+                    <span class="hidden sm:inline">Ver Sitio Web</span>
+                    <i class="fa-solid fa-arrow-up-right-from-square text-[10px] md:text-xs"></i>
                 </a>
-                <a href="/api/auth/logout" class="bg-red-50 text-red-600 px-4 py-2 rounded-full text-sm font-bold hover:bg-red-100 transition-all flex items-center gap-2 border border-red-100">
-                    <i class="fa-solid fa-right-from-bracket"></i> Cerrar Sesión
+                
+                <a href="/api/auth/logout" class="bg-red-50 text-red-600 px-3 md:px-4 py-1.5 md:py-2 rounded-full text-[10px] md:text-sm font-bold hover:bg-red-100 transition-all flex items-center gap-1.5 border border-red-100">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    <span>Cerrar <span class="hidden xs:inline">Sesión</span></span>
                 </a>
             </div>
         </nav>
